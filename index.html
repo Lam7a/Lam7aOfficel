@@ -3,89 +3,431 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lam7a Studio | تسجيل الدخول</title>
+    <title>MoonLith Studio | استديو التصميم الإبداعي</title>
+    
+    <!-- CSS Files -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- JS Files -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
     <style>
         :root {
-            --primary: #8E44AD;
-            --secondary: #9B59B6;
-            --accent: #D7BDE2;
+            --primary: #6c3483;
+            --secondary: #8e44ad;
+            --accent: #9b59b6;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         body {
-            background: linear-gradient(135deg, var(--accent), #fff);
+            background: linear-gradient(-45deg, #6c3483, #8e44ad, #9b59b6, #2c3e50);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             font-family: 'Tajawal', sans-serif;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--light);
+            min-height: 100vh;
         }
 
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .navbar {
+            background: rgba(0, 0, 0, 0.2) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-section {
+            padding: 100px 0;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
+            position: relative;
+            overflow: hidden;
         }
 
-        .login-btn {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 18px;
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+
+background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
             transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
             margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .free-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .cooldown-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .price-tag {
+            background: var(--gradient);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 15px 0;
+            font-size: 1.5rem;
+        }
+
+        .custom-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 80%;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .custom-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+
+border-radius: 20px;
+        }
+
+        .modal-header {
+            background: var(--gradient);
+            border-radius: 20px 20px 0 0;
+            color: white;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .features-list li {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .features-list li i {
+            margin-left: 10px;
+            color: #2ecc71;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-body {
+            color: var(--dark);
+        }
+
+        .form-control {
+            border-radius: 15px;
+            padding: 12px;
+            border: 2px solid var(--light);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: none;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="logo.png" alt="MoonLith Studio" class="logo">
-        <h2 class="mb-4">مرحباً بك في Lam7a Studio</h2>
-        <p class="mb-4">قم بتسجيل الدخول باستخدام Discord للمتابعة</p>
-        <button onclick="loginWithDiscord()" class="login-btn">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-moon"></i> MoonLith Studio
+            </a>
+        </div>
+    </nav>
 
-            <i class="fab fa-discord me-2"></i> تسجيل الدخول باستخدام Discord
-        </button>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">MoonLith Studio</h1>
+            <p class="lead mb-5">نقدم لك أفضل التصاميم الإبداعية التي تناسب احتياجاتك</p>
+
+            <div class="row justify-content-center">
+                <!-- الباقة المجانية -->
+                <div class="col-md-3">
+                    <div class="card text-center p-4">
+
+<span class="free-badge">مجاني</span>
+                        <span class="cooldown-badge">كل 3 أيام</span>
+                        <h3>باقة Logo المجانية</h3>
+                        <div class="price-tag">$0</div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i>تصميم شعار بسيط</li>
+                            <li><i class="fas fa-check"></i>تعديل واحد مجاناً</li>
+                            <li><i class="fas fa-check"></i>تسليم خلال 48 ساعة</li>
+                        </ul>
+                        <button onclick="checkFreePackageEligibility()" class="custom-btn">
+                            اطلب الآن
+                        </button>
+                    </div>
+                </div>
+
+                <!-- باقة بيسك -->
+                <div class="col-md-3">
+                    <div class="card text-center p-4">
+                        <h3>باقة بيسك</h3>
+                        <div class="price-tag">$1</div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i>تصميم بسيط</li>
+                            <li><i class="fas fa-check"></i>تعديلين مجاناً</li>
+                            <li><i class="fas fa-check"></i>تسليم خلال 24 ساعة</li>
+                        </ul>
+                        <button onclick="selectPackage('باقة بيسك - $1')" class="custom-btn">
+                            اختيار الباقة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- باقة برو -->
+                <div class="col-md-3">
+                    <div class="card text-center p-4">
+                        <h3>باقة برو</h3>
+                        <div class="price-tag">$5</div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i>تصميم احترافي</li>
+                            <li><i class="fas fa-check"></i>تعديلات غير محدودة</li>
+
+<li><i class="fas fa-check"></i>تسليم خلال 12 ساعة</li>
+                        </ul>
+                        <button onclick="selectPackage('باقة برو - $5')" class="custom-btn">
+                            اختيار الباقة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- باقة بريميوم -->
+                <div class="col-md-3">
+                    <div class="card text-center p-4">
+                        <h3>باقة بريميوم</h3>
+                        <div class="price-tag">$10</div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i>تصميم احترافي مميز</li>
+                            <li><i class="fas fa-check"></i>تعديلات غير محدودة</li>
+                            <li><i class="fas fa-check"></i>تسليم خلال 6 ساعات</li>
+                        </ul>
+                        <button onclick="selectPackage('باقة بريميوم - $10')" class="custom-btn">
+                            اختيار الباقة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج الطلب -->
+    <div class="modal fade" id="orderModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">طلب تصميم جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="orderForm" onsubmit="submitOrder(event)">
+                        <div class="mb-3">
+                            <label class="form-label">الباقة المختارة</label>
+                            <input type="text" id="selectedPackage" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+
+<label class="form-label">الاسم الكامل</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">البريد الإلكتروني</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">معرف Discord</label>
+                            <input type="text" name="discord" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">تفاصيل الطلب</label>
+                            <textarea name="details" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn" class="custom-btn">
+                            <i class="fas fa-paper-plane"></i> إرسال الطلب
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const DISCORD_CLIENT_ID = '1312489656796971098';
-        const REDIRECT_URI = 'https://moon-lith.github.io/Moonlight/callback';
+        // تهيئة EmailJS
+        emailjs.init({
+            publicKey: "jDE8nQ7KU9m4EJNo7",
+            blockHeadless: false,
+        });
 
-        function loginWithDiscord() {
-            const params = new URLSearchParams({
-                client_id: DISCORD_CLIENT_ID,
-                redirect_uri: REDIRECT_URI,
-                response_type: 'code',
-                scope: 'identify email'
-            });
-            window.location.href = `https://discord.com/oauth2/authorize?${params}`;
+        // دالة للحصول على IP المستخدم
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
         }
 
-        // التحقق من وجود توكن
-        window.onload = function() {
-            if (localStorage.getItem('discord_token')) {
-                window.location.href = 'dashboard.html';
+        // التحقق من أهلية الباقة المجانية
+        function checkFreePackageEligibility() {
+
+const userIP = localStorage.getItem('userIP');
+            const lastOrderTime = localStorage.getItem(`lastFreeOrder_${userIP}`);
+            const currentTime = new Date().getTime();
+            const threeDays = 3 * 24 * 60 * 60 * 1000;
+
+            if (lastOrderTime && (currentTime - parseInt(lastOrderTime)) < threeDays) {
+                const remainingTime = Math.ceil((threeDays - (currentTime - parseInt(lastOrderTime))) / (24 * 60 * 60 * 1000));
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'عذراً!',
+                    text: `يمكنك طلب الباقة المجانية بعد ${remainingTime} يوم`,
+                    confirmButtonText: 'حسناً'
+                });
+            } else {
+                selectPackage('باقة Logo المجانية - $0');
             }
-        };
-    </script>
+        }
+
+        // اختيار الباقة
+        function selectPackage(packageName) {
+            document.getElementById('selectedPackage').value = packageName;
+            new bootstrap.Modal(document.getElementById('orderModal')).show();
+        }
+
+        // إرسال الطلب
+        async function submitOrder(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> جاري الإر
+سال...';
+
+try {
+const form = document.getElementById('orderForm');
+const templateParams = {
+from_name: form.querySelector('input[name="name"]').value,
+to_email: 'Lam7aStudio@gmail.com',
+package: document.getElementById('selectedPackage').value,
+email: form.querySelector('input[name="email"]').value,
+discord: form.querySelector('input[name="discord"]').value,
+details: form.querySelector('textarea[name="details"]').value
+};
+
+await emailjs.send(
+"service_l82w2oc",
+"template_43nya5a",
+templateParams,
+"jDE8nQ7KU9m4EJNo7"
+);
+
+if (templateParams.package.includes('مجانية')) {
+const userIP = localStorage.getItem('userIP');
+localStorage.setItem(`lastFreeOrder_${userIP}`, new Date().getTime().toString());
+}
+
+Swal.fire({
+icon: 'success',
+title: 'تم إرسال طلبك بنجاح!',
+text: 'سنتواصل معك قريباً',
+confirmButtonText: 'تم'
+});
+
+form.reset();
+bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+
+} catch (error) {
+console.error('Error:', error);
+Swal.fire({
+icon: 'error',
+title: 'خطأ!',
+text: 'حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى',
+confirmButtonText: 'حسناً'
+});
+} finally {
+submitBtn.disabled = false;
+submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+}
+}
+
+// التحقق من IP عند تحميل الصفحة
+window.onload = async function() {
+const userIP = await getUserIP();
+if (userIP) {
+localStorage.setItem('userIP', userIP);
+}
+};
+</script>
 </body>
 </html>
