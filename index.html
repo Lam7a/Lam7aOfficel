@@ -1,13 +1,16 @@
-
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lam7a Studio - خدمات التصميم</title>
+
+<!-- CSS Libraries -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- JavaScript Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
@@ -36,12 +39,24 @@ body {
     box-shadow: 0 2px 10px rgba(147, 51, 234, 0.2);
 }
 
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white !important;
+}
+
 .hero {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     padding: 70px 0;
     color: white;
     text-align: center;
     margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
 }
 
 .card {
@@ -70,13 +85,15 @@ body {
 
 .btn-custom:hover {
     background: var(--primary-dark);
-    color: white;
+
+color: white;
 }
 
 .price {
     font-size: 28px;
     font-weight: 700;
     color: var(--primary);
+    margin: 20px 0;
 }
 
 .features-list {
@@ -87,8 +104,7 @@ body {
 .features-list li {
     margin: 10px 0;
     display: flex;
-
-align-items: center;
+    align-items: center;
 }
 
 .features-list i {
@@ -127,6 +143,17 @@ align-items: center;
     border-radius: 15px 15px 0 0;
 }
 
+.form-control {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+}
+
 .invoice-container {
     background: white;
     border-radius: 15px;
@@ -140,7 +167,9 @@ align-items: center;
 
 <nav class="navbar navbar-dark">
     <div class="container">
-        <span class="navbar-brand"><i class="fas fa-magic"></i> Lam7a Studio</span>
+        <span class="navbar-brand">
+            <i class="fas fa-magic"></i> Lam7a Studio
+        </span>
     </div>
 </nav>
 
@@ -160,7 +189,8 @@ align-items: center;
                 <h3>تصميم مجاني</h3>
                 <div class="price">$0</div>
                 <ul class="features-list">
-                    <li><i class="fas fa-check"></i>تصميم بسيط</li>
+
+<li><i class="fas fa-check"></i>تصميم بسيط</li>
                     <li><i class="fas fa-check"></i>تعديل واحد</li>
                     <li><i class="fas fa-clock"></i>كل 3 أيام</li>
                 </ul>
@@ -168,12 +198,11 @@ align-items: center;
             </div>
         </div>
 
-‎        <!-- باقة 10M -->
+        <!-- باقة 10M -->
         <div class="col-md-3">
             <div class="card text-center">
                 <span class="badge-custom">10M كريدت</span>
-
-<h3>باقة ستارت</h3>
+                <h3>باقة ستارت</h3>
                 <div class="price">$5</div>
                 <ul class="features-list">
                     <li><i class="fas fa-check"></i>10M كريدت</li>
@@ -184,7 +213,7 @@ align-items: center;
             </div>
         </div>
 
-‎        <!-- باقة 50M -->
+        <!-- باقة 50M -->
         <div class="col-md-3">
             <div class="card text-center">
                 <span class="badge-custom">50M كريدت</span>
@@ -199,7 +228,7 @@ align-items: center;
             </div>
         </div>
 
-‎        <!-- باقة 100M -->
+        <!-- باقة 100M -->
         <div class="col-md-3">
             <div class="card text-center">
                 <span class="badge-custom">100M كريدت</span>
@@ -207,7 +236,8 @@ align-items: center;
                 <div class="price">$35</div>
                 <ul class="features-list">
                     <li><i class="fas fa-check"></i>100M كريدت</li>
-                    <li><i class="fas fa-check"></i>تصميم خاص</li>
+
+<li><i class="fas fa-check"></i>تصميم خاص</li>
                     <li><i class="fas fa-check"></i>تعديلات لا محدودة</li>
                 </ul>
                 <button onclick="createOrder('100M')" class="btn-custom">طلب الآن</button>
@@ -222,8 +252,7 @@ align-items: center;
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">طلب جديد</h5>
-
-<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="orderForm">
@@ -248,16 +277,19 @@ align-items: center;
     </div>
 </div>
 
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-(function() {
-    emailjs.init("jDE8nQ7KU9m4EJNo7");
-})();
+// تهيئة EmailJS
+emailjs.init("jDE8nQ7KU9m4EJNo7");
+
+// دالة إنشاء رقم طلب فريد
 
 function generateOrderNumber() {
     return 'LAM-' + Date.now().toString().slice(-6);
 }
 
+// دالة التحقق من الطلب المجاني
 function checkFreeOrderEligibility() {
     const lastFreeOrder = localStorage.getItem('lastFreeOrder');
     if (lastFreeOrder) {
@@ -268,26 +300,29 @@ function checkFreeOrderEligibility() {
     return true;
 }
 
+// دالة حفظ الطلب
 function saveOrder(orderData) {
     const orders = JSON.parse(localStorage.getItem('orders') || '{}');
     orders[orderData.orderNumber] = orderData;
-
-localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem('orders', JSON.stringify(orders));
 }
 
+// دالة إنشاء طلب جديد
 function createOrder(type) {
-    if (type === 'مجاني' && !checkFreeOrderEligibility()) {
-        const lastOrder = new Date(parseInt(localStorage.getItem('lastFreeOrder')));
-        const nextAvailable = new Date(lastOrder.getTime() + (3 * 24 * 60 * 60 * 1000));
-        Swal.fire({
-            icon: 'warning',
-            title: 'عذراً!',
-            html: `يمكنك طلب تصميم مجاني مرة كل 3 أيام.<br>موعد طلبك القادم: <br>${nextAvailable.toLocaleString('ar-SA')}`,
-            confirmButtonColor: '#9333EA'
-        });
-        return;
+    if (type === 'مجاني') {
+        if (!checkFreeOrderEligibility()) {
+            const lastOrder = new Date(parseInt(localStorage.getItem('lastFreeOrder')));
+            const nextAvailable = new Date(lastOrder.getTime() + (3 * 24 * 60 * 60 * 1000));
+            Swal.fire({
+                icon: 'warning',
+                title: 'عذراً!',
+                html: `يمكنك طلب تصميم مجاني مرة كل 3 أيام.<br>موعد طلبك القادم: <br>${nextAvailable.toLocaleString('ar-SA')}`,
+                confirmButtonColor: '#9333EA'
+            });
+            return;
+        }
     }
-    
+
     const orderNumber = generateOrderNumber();
     document.getElementById('packageType').value = type;
     document.getElementById('orderId').value = orderNumber;
@@ -295,7 +330,8 @@ function createOrder(type) {
     new bootstrap.Modal(document.getElementById('orderModal')).show();
 }
 
-document.getElementById('orderForm').onsubmit = async function(e) {
+// معالجة تقديم النموذج
+document.getElementById('orderForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const submitBtn = this.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
@@ -304,7 +340,8 @@ document.getElementById('orderForm').onsubmit = async function(e) {
     try {
         const formData = new FormData(this);
         const orderData = {
-            orderNumber: formData.get('orderId'),
+
+orderNumber: formData.get('orderId'),
             name: formData.get('name'),
             email: formData.get('email'),
             discord: formData.get('discord'),
@@ -318,29 +355,24 @@ document.getElementById('orderForm').onsubmit = async function(e) {
             localStorage.setItem('lastFreeOrder', Date.now().toString());
         }
 
-        await emailjs.send(
-            "service_l82w2oc",
-            "template_43nya5a",
-            orderData
-        );
+        await emailjs.send("service_l82w2oc", "template_43nya5a", orderData);
 
         Swal.fire({
             icon: 'success',
             title: 'تم إرسال طلبك بنجاح!',
-
-html: `
-                <div class="invoice-container">
-                    <h3>تفاصيل الطلب</h3>
-                    <div class="order-number">رقم الطلب: ${orderData.orderNumber}</div>
-                    <hr>
-                    <p><strong>الاسم:</strong> ${orderData.name}</p>
-                    <p><strong>الباقة:</strong> ${orderData.package_type}</p>
-                    <p><strong>معرف Discord:</strong> ${orderData.discord}</p>
-                    <p><strong>التاريخ:</strong> ${new Date().toLocaleString('ar-SA')}</p>
-                    <button onclick="editOrder('${orderData.orderNumber}')" class="btn-custom">
-                        <i class="fas fa-edit"></i> تعديل الطلب
-                    </button>
-                </div>
+            html: `
+            <div class="invoice-container">
+                <h3>تفاصيل الطلب</h3>
+                <div class="order-number">رقم الطلب: ${orderData.orderNumber}</div>
+                <hr>
+                <p><strong>الاسم:</strong> ${orderData.name}</p>
+                <p><strong>الباقة:</strong> ${orderData.package_type}</p>
+                <p><strong>معرف Discord:</strong> ${orderData.discord}</p>
+                <p><strong>التاريخ:</strong> ${new Date().toLocaleString('ar-SA')}</p>
+                <button onclick="editOrder('${orderData.orderNumber}')" class="btn-custom">
+                    <i class="fas fa-edit"></i> تعديل الطلب
+                </button>
+            </div>
             `,
             confirmButtonColor: '#9333EA'
         });
@@ -351,31 +383,30 @@ html: `
     } catch (error) {
         console.error('Error:', error);
         Swal.fire({
-            icon: 'error',
-            title: 'حدث خطأ!',
-            text: 'يرجى المحاولة مرة أخرى',
-            confirmButtonColor: '#9333EA'
-        });
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'إرسال الطلب';
-    }
-};
+            icon: 'error
+title: 'حدث خطأ!',
+text: 'يرجى المحاولة مرة أخرى',
+confirmButtonColor: '#9333EA'
+});
+} finally {
+submitBtn.disabled = false;
+submitBtn.innerHTML = 'إرسال الطلب';
+}
+});
 
+// دالة تعديل الطلب
 function editOrder(orderNumber) {
-    const orders = JSON.parse(localStorage.getItem('orders') || '{}');
-    const order = orders[orderNumber];
-    if (order) {
-        const form = document.getElementById('orderForm');
-        form.querySelector('[name="name"]').value = order.name;
-        form.querySelector('[name="email"]').value = order.email;
-        form.querySelector('[name="discord"]').value = order.discord;
-        form.querySelector('[name="details"]').value = order.details;
-        document.getElementById('packageType').value = order.package_type;
-        document.getElementById('orderId').value = order.orderNumber;
-        new bootstrap.Modal(document.getElementById('orderModal')).show();
-    }
-
+const orders = JSON.parse(localStorage.getItem('orders') || '{}');
+const order = orders[orderNumber];
+if (order) {
+const form = document.getElementById('orderForm');
+form.querySelector('[name="name"]').value = order.name;
+form.querySelector('[name="email"]').value = order.email;
+form.querySelector('[name="discord"]').value = order.discord;
+form.querySelector('[name="details"]').value = order.details;
+document.getElementById('packageType').value = order.package_type;
+document.getElementById('orderId').value = order.orderNumber;
+new bootstrap.Modal(document.getElementById('orderModal')).show();
 }
 }
 </script>
