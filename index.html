@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lam7a Studio | تسجيل الدخول</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8E44AD;
+            --secondary: #9B59B6;
+            --accent: #D7BDE2;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--accent), #fff);
+            font-family: 'Tajawal', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="logo.png" alt="MoonLith Studio" class="logo">
+        <h2 class="mb-4">مرحباً بك في Lam7a Studio</h2>
+        <p class="mb-4">قم بتسجيل الدخول باستخدام Discord للمتابعة</p>
+        <button onclick="loginWithDiscord()" class="login-btn">
+
+            <i class="fab fa-discord me-2"></i> تسجيل الدخول باستخدام Discord
+        </button>
+    </div>
+
+    <script>
+        const DISCORD_CLIENT_ID = '1312489656796971098';
+        const REDIRECT_URI = 'https://moon-lith.github.io/Moonlight/callback';
+
+        function loginWithDiscord() {
+            const params = new URLSearchParams({
+                client_id: DISCORD_CLIENT_ID,
+                redirect_uri: REDIRECT_URI,
+                response_type: 'code',
+                scope: 'identify email'
+            });
+            window.location.href = `https://discord.com/oauth2/authorize?${params}`;
+        }
+
+        // التحقق من وجود توكن
+        window.onload = function() {
+            if (localStorage.getItem('discord_token')) {
+                window.location.href = 'dashboard.html';
+            }
+        };
+    </script>
+</body>
+</html>

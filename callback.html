@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>جاري التحويل...</title>
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            const code = new URLSearchParams(window.location.search).get('code');
+            if (code) {
+                localStorage.setItem('discord_token', 'logged_in');
+                window.location.href = '/Moonlight/';
+            }
+        };
+    </script>
+</body>
+</html>
