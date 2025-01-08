@@ -1,124 +1,66 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر التصاميم | الرئيسية</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<style>
-:root {
-    --primary-color: #0083b0;
-    --secondary-color: #00b4db;
-    --dark-color: #333;
-    --light-color: #f4f4f4;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر التصاميم</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary-color: #0083b0;
+            --secondary-color: #00b4db;
+        }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--light-color);
-}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-.navbar {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    padding: 1rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
 
-.hero-section {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 100px 0;
-    margin-bottom: 50px;
-}
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0;
+        }
 
-.design-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-}
+        .design-card {
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
 
-.design-card:hover {
-    transform: translateY(-5px);
-}
+        .design-card:hover {
+            transform: translateY(-5px);
+        }
 
-.design-image {
-    height: 200px;
-    object-fit: cover;
-}
-
-.price {
-    color: var(--primary-color);
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.cart-floating {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    z-index: 1000;
-}
-
-.cart-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    transition: all 0.3s;
-}
-
-.cart-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #dc3545;
-    color: white;
-
-border-radius: 50%;
-    padding: 5px 8px;
-    font-size: 12px;
-}
-
-.feature-card {
-    text-align: center;
-    padding: 30px;
-    background: white;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-}
-
-.feature-icon {
-    font-size: 40px;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-</style>
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            <i class="fas fa-paint-brush me-2"></i>متجر التصاميم
-        </a>
+        <a class="navbar-brand" href="#">متجر التصاميم</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+
+<div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" href="#home">الرئيسية</a>
@@ -127,13 +69,17 @@ border-radius: 50%;
                     <a class="nav-link" href="#designs">التصاميم</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#request">طلب تصميم</a>
+                    <a class="nav-link" href="#contact">تواصل معنا</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center">
-                <span class="text-white me-3" id="userEmail"></span>
+                <span class="text-white me-3" id="userName"></span>
+                <button class="btn btn-outline-light me-2" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="btn btn-outline-light" id="loginBtn">تسجيل دخول</button>
                 <button class="btn btn-outline-light" id="logoutBtn" style="display: none;">تسجيل خروج</button>
-                <a href="login.html" class="btn btn-outline-light" id="loginBtn">تسجيل دخول</a>
             </div>
         </div>
     </div>
@@ -141,60 +87,19 @@ border-radius: 50%;
 
 <section class="hero-section" id="home">
     <div class="container text-center">
-        <h1 class="display-4 mb-4">أفضل التصاميم الإبداعية</h1>
-        <p class="lead mb-4">نقدم خدمات تصميم احترافية تناسب جميع احتياجاتك</p>
-        <a href="#request" class="btn btn-light btn-lg">اطلب تصميمك الآن</a>
-
-</div>
+        <h1>أفضل التصاميم الإبداعية</h1>
+        <p class="lead">نقدم تصاميم احترافية تناسب احتياجاتك</p>
+    </div>
 </section>
 
 <section class="py-5" id="designs">
     <div class="container">
         <h2 class="text-center mb-4">تصاميمنا المميزة</h2>
-        <div class="row" id="designsGrid"></div>
+        <div class="row" id="designsContainer"></div>
     </div>
 </section>
 
-<section class="py-5 bg-light" id="request">
-    <div class="container">
-        <h2 class="text-center mb-4">طلب تصميم جديد</h2>
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <form class="bg-white p-4 rounded shadow" id="requestForm">
-                    <div class="mb-3">
-                        <label class="form-label">نوع التصميم</label>
-                        <select class="form-select" required name="designType">
-                            <option value="">اختر نوع التصميم</option>
-                            <option value="logo">شعار</option>
-                            <option value="business_card">بطاقة عمل</option>
-                            <option value="social_media">تصميم سوشيال ميديا</option>
-                            <option value="banner">بنر</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">وصف التصميم</label>
-                        <textarea class="form-control" rows="4" required name="description"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">الميزانية (ريال)</label>
-                        <input type="number" class="form-control" required name="budget" min="100">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">إرسال الطلب</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="cart-floating">
-    <button class="cart-btn" id="cartBtn">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-badge" id="cartBadge">0</span>
-    </button>
-</div>
-
-<!-- Modal السلة -->
-
+‎<!-- نافذة السلة -->
 <div class="modal fade" id="cartModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -205,278 +110,207 @@ border-radius: 50%;
             <div class="modal-body">
                 <div id="cartItems"></div>
                 <div class="text-end mt-3">
-                    <h5>المجموع: <span id="cartTotal">0</span> ريال</h5>
+
+<h5>المجموع: <span id="cartTotal">0</span> ريال</h5>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="checkoutBtn">إتمام الشراء</button>
+                <button class="btn btn-primary" onclick="checkout()">إتمام الطلب</button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-‎// تهيئة EmailJS
+// تهيئة Supabase
+const supabaseUrl = 'https://jocgtfekndsdcfftmlhs.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// تهيئة EmailJS
 emailjs.init("service_l82w2oc");
 
-‎// تهيئة Supabase
-const supabase = createClient('https://jocgtfekndsdcfftmlhs.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk');
-
-let user = null;
-let cart = [];
-
-‎// التصاميم المتوفرة
+// بيانات التصاميم
 const designs = [
     {
         id: 1,
         title: "شعار احترافي",
-        description: "تصميم شعار عصري وفريد",
         price: 299,
         image: "https://via.placeholder.com/300x200"
     },
     {
         id: 2,
         title: "بطاقة أعمال",
-        description: "تصميم بطاقة عمل احترافية",
         price: 149,
         image: "https://via.placeholder.com/300x200"
     },
     {
         id: 3,
         title: "تصميم سوشيال ميديا",
-        description: "حزمة تصاميم مواقع التواصل",
-        price: 499,
+        price: 199,
         image: "https://via.placeholder.com/300x200"
     }
 ];
 
-‎// عرض التصاميم
+// عرض التصاميم
 function displayDesigns() {
-    const designsGrid = document.getElementById('designsGrid');
-    designsGrid.innerHTML = designs.map(design => `
+    const container = document.getElementById('designsContainer');
+    container.innerHTML = designs.map(design => `
         <div class="col-md-4 mb-4">
             <div class="design-card">
-                <img src="${design.image}" class="design-image w-100" alt="${design.title}">
-
-<div class="card-body">
+                <img src="${design.image}" class="card-img-top" alt="${design.title}">
+                <div class="card-body">
                     <h5 class="card-title">${design.title}</h5>
-                    <p class="card-text">${design.description}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="price">${design.price} ريال</span>
-                        <button class="btn btn-primary" onclick="addToCart(${design.id})">
-‎                            أضف للسلة
-                        </button>
-                    </div>
+                    <p class="card-text">${design.price} ريال</p>
+                    <button class="btn btn-primary" onclick="addToCart(${design.id})">
+                        أضف للسلة
+                    </button>
                 </div>
             </div>
         </div>
     `).join('');
 }
 
-‎// إضافة للسلة
+// إضافة للسلة
 function addToCart(designId) {
-    if (!user) {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+if (!user) {
+        alert('الرجاء تسجيل الدخول أولاً');
         window.location.href = 'login.html';
         return;
     }
 
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const design = designs.find(d => d.id === designId);
-    if (!design) return;
 
-    const existingItem = cart.find(item => item.id === designId);
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({
-            ...design,
-            quantity: 1
-        });
+    if (design) {
+        const existingItem = cart.find(item => item.id === designId);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({ ...design, quantity: 1 });
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+        alert('تمت الإضافة للسلة');
     }
-
-    updateCartBadge();
-    updateCartModal();
 }
 
-‎// تحديث السلة
+// تحديث شارة السلة
 function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const badge = document.getElementById('cartBadge');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    badge.textContent = totalItems;
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+    badge.textContent = total;
 }
 
-function updateCartModal() {
+// عرض السلة
+function showCart() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const cartItems = document.getElementById('cartItems');
     const cartTotal = document.getElementById('cartTotal');
-    
+
     cartItems.innerHTML = cart.map(item => `
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-                <h6 class="mb-0">${item.title}</h6>
-                <small class="text-muted">${item.price} ريال × ${item.quantity}</small>
+                <h6>${item.title}</h6>
+                <small>${item.price} × ${item.quantity}</small>
             </div>
-            <div class="d-flex align-items-center">
-                <button class="btn btn-sm btn-outline-danger me-2" 
-                        onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-
-<span>${item.quantity}</span>
-                <button class="btn btn-sm btn-outline-success ms-2" 
-                        onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+            <div>
+                <button class="btn btn-sm btn-outline-danger" 
+                    onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                <span class="mx-2">${item.quantity}</span>
+                <button class="btn btn-sm btn-outline-success"
+                    onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
             </div>
         </div>
     `).join('');
 
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     cartTotal.textContent = total;
+
+new bootstrap.Modal(document.getElementById('cartModal')).show();
 }
 
-‎// معالجة طلب التصميم
-document.getElementById('requestForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!user) {
-        window.location.href = 'login.html';
+// تحديث الكمية
+function updateQuantity(id, newQuantity) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    if (newQuantity < 1) {
+        cart = cart.filter(item => item.id !== id);
+    } else {
+        const item = cart.find(item => item.id === id);
+        if (item) item.quantity = newQuantity;
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge();
+    showCart();
+}
+
+// إتمام الطلب
+async function checkout() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    if (!user || cart.length === 0) {
+        alert('الرجاء تسجيل الدخول وإضافة منتجات للسلة');
         return;
     }
 
-    const formData = new FormData(e.target);
     try {
         const { data, error } = await supabase
-            .from('design_requests')
+            .from('orders')
             .insert([{
                 user_id: user.id,
-                design_type: formData.get('designType'),
-                description: formData.get('description'),
-                budget: formData.get('budget')
+                items: cart,
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
             }]);
 
         if (error) throw error;
 
-‎        // إرسال إيميل تأكيد
         await emailjs.send("service_l82w2oc", "template_43nya5a", {
             to_name: user.email,
-            message: "تم استلام طلب التصميم الخاص بك وسيتم التواصل معك قريباً"
+            message: "تم استلام طلبك بنجاح"
         });
 
+        localStorage.removeItem('cart');
+        updateCartBadge();
+        bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
         alert('تم إرسال طلبك بنجاح!');
-        e.target.reset();
 
     } catch (error) {
         console.error('Error:', error);
-        alert('حدث خطأ أثناء إرسال الطلب');
+        alert('حدث خطأ أثناء إتمام الطلب');
+    }
+}
+
+// تهيئة الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    displayDesigns();
+    updateCartBadge();
+    
+    document.getElementById('cartBtn').addEventListener('click', showCart);
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        localStorage.removeItem('user');
+        localStorage.removeItem('cart');
+        updateCartBadge();
+
+        window.location.href = 'login.html';
+    });
+
+    // التحقق من حالة تسجيل الدخول
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('userName').textContent = user.email;
+        document.getElementById('loginBtn').style.display = 'none';
+        document.getElementById('logoutBtn').style.display = 'inline-block';
     }
 });
-
-‎// تحقق من حالة تسجيل الدخول
-window.addEventListener('load', async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    user = session?.user;
-    updateAuthUI();
-    displayDesigns();
-});
-
-function updateAuthUI() {
-    const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const userEmail = document.getElementById('userEmail');
-
-    if (user) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
-
-userEmail.textContent = user.email;
-} else {
-loginBtn.style.display = 'block';
-logoutBtn.style.display = 'none';
-userEmail.textContent = '';
-}
-}
-
-‎// تسجيل الخروج
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-try {
-await supabase.auth.signOut();
-user = null;
-cart = [];
-updateAuthUI();
-updateCartBadge();
-window.location.href = 'login.html';
-} catch (error) {
-console.error('Error signing out:', error);
-alert('حدث خطأ أثناء تسجيل الخروج');
-}
-});
-
-‎// معالجة السلة
-document.getElementById('cartBtn').addEventListener('click', () => {
-if (!user) {
-window.location.href = 'login.html';
-return;
-}
-const modal = new bootstrap.Modal(document.getElementById('cartModal'));
-updateCartModal();
-modal.show();
-});
-
-‎// إتمام الشراء
-document.getElementById('checkoutBtn').addEventListener('click', async () => {
-if (cart.length === 0) {
-alert('السلة فارغة');
-return;
-}
-
-try {
-const { data, error } = await supabase
-.from('orders')
-.insert([{
-user_id: user.id,
-items: cart,
-total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-status: 'pending'
-}]);
-
-if (error) throw error;
-
-‎// إرسال إيميل تأكيد الطلب
-await emailjs.send("service_l82w2oc", "template_43nya5a", {
-to_name: user.email,
-message: "تم استلام طلبك بنجاح وسيتم التواصل معك قريباً لإتمام عملية الدفع"
-});
-
-cart = [];
-updateCartBadge();
-updateCartModal();
-bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
-alert('تم إرسال طلبك بنجاح!');
-
-} catch (error) {
-console.error('Error:', error);
-alert('حدث خطأ أثناء معالجة الطلب');
-}
-});
-
-‎// تحديث كمية المنتج في السلة
-function updateQuantity(designId, newQuantity) {
-if (newQuantity < 1) {
-cart = cart.filter(item => item.id !== designId);
-} else {
-const item = cart.find(item => item.id === designId);
-if (item) item.quantity = newQuantity;
-}
-
-updateCartBadge();
-updateCartModal();
-}
-
-‎// التحقق من تحديثات السلة
-window.addEventListener('storage', (e) => {
-if (e.key === 'cart') {
-cart = JSON.parse(e.newValue || '[]');
-
-updateCartBadge();
-}
-});
-
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
