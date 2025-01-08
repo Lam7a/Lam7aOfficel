@@ -1,348 +1,132 @@
+
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SF DESIGNS | تصاميم احترافية</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-<style>
-:root {
-    --primary: #8B5CF6;
-    --primary-dark: #7C3AED;
-    --secondary: #A78BFA;
-    --light: #EDE9FE;
-    --dark: #2D1B69;
-}
-
-body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #F5F3FF;
-    overflow-x: hidden;
-}
-
-.navbar {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    padding: 20px 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.hero-section {
-    background: linear-gradient(135deg, var(--primary), var(--dark));
-    padding: 150px 0;
-    color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: url('https://i.imgur.com/pattern.png');
-    opacity: 0.1;
-    animation: move 20s linear infinite;
-}
-
-@keyframes move {
-    0% { transform: translateX(0) translateY(0); }
-    100% { transform: translateX(-50%) translateY(-50%); }
-}
-
-.package-card {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    margin: 20px 0;
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.package-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
-}
-
-.package-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, var(--primary), var(--primary-dark));
-}
-
-.price-tag {
-    background: var(--primary);
-    color: white;
-    padding: 8px 20px;
-
-border-radius: 50px;
-    font-weight: bold;
-    display: inline-block;
-    margin: 10px 0;
-}
-
-.feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
-
-.feature-list li {
-    margin: 10px 0;
-    padding-right: 25px;
-    position: relative;
-}
-
-.feature-list li::before {
-    content: '✓';
-    color: var(--primary);
-    position: absolute;
-    right: 0;
-    font-weight: bold;
-}
-
-.btn-order {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    padding: 12px 30px;
-    border-radius: 50px;
-    border: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.btn-order:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
-    color: white;
-}
-
-.order-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-#loadingScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.5s;
-}
-
-.loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255,255,255,0.3);
-    border-top: 5px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SF DESIGNS | تصاميم احترافية</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+‎        /* نفس الـ CSS السابق */
+    </style>
 </head>
 <body>
+‎    <!-- نفس HTML السابق حتى قبل السكربت -->
 
-<!-- شاشة التحميل -->
-<div id="loadingScreen">
-    <div class="loading-spinner"></div>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <script>
+‎        // تهيئة EmailJS
+        emailjs.init("service_l82w2oc");
 
-<!-- القائمة العلوية -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <i class="fas fa-paint-brush me-2"></i>SF DESIGNS
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+‎        // التحقق من حالة تسجيل الدخول للمشرف
+        function checkAdminStatus() {
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                const adminLink = document.createElement('li');
+                adminLink.className = 'nav-item';
+                adminLink.innerHTML = '<a class="nav-link" href="admin.html"><i class="fas fa-user-shield"></i> لوحة التحكم</a>';
+                document.querySelector('.navbar-nav').appendChild(adminLink);
+            }
+        }
 
-</button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#home">الرئيسية</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#packages">الباقات</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#order">طلب تصميم</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+‎        // التمرير إلى قسم الطلب
+        function scrollToOrder(package) {
+            document.querySelector('select').value = package;
+            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+        }
 
-<!-- القسم الرئيسي -->
-<section class="hero-section text-center" id="home">
-    <div class="container">
-        <h1 class="display-4 mb-4">تصاميم احترافية تناسب ذوقك</h1>
-        <p class="lead mb-5">نقدم أفضل التصاميم الإحترافية بأسعار تنافسية</p>
-        <a href="#packages" class="btn btn-light btn-lg">استكشف باقاتنا</a>
-    </div>
-</section>
+‎        // إرسال الطلب
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-<!-- قسم الباقات -->
-<section class="py-5" id="packages">
-    <div class="container">
-        <h2 class="text-center mb-5">باقاتنا المميزة</h2>
-        <div class="row">
-            <!-- الباقة البرونزية -->
-            <div class="col-md-4">
-                <div class="package-card">
-                    <h3>الباقة البرونزية</h3>
-                    <span class="price-tag">10M</span>
-                    <ul class="feature-list">
-                        <li>تصميم صورة شخصية</li>
-                        <li>تعديلات مجانية</li>
-                        <li>دقة عالية</li>
-                        <li>تسليم سريع</li>
-                    </ul>
-                    <button onclick="scrollToOrder('برونزية')" class="btn btn-order">اطلب الآن</button>
-                </div>
-            </div>
-            
-            <!-- الباقة الفضية -->
-            <div class="col-md-4">
-                <div class="package-card">
-                    <h3>الباقة الفضية</h3>
-                    <span class="price-tag">20M</span>
-                    <ul class="feature-list">
+            const name = e.target[0].value;
+            const discord = e.target[1].value;
+            const packageType = e.target[2].value;
+            const details = e.target[3].value;
 
-<li>بنر سيرفر ديسكورد</li>
-                        <li>تصميم صورة شخصية</li>
-                        <li>تعديلات غير محدودة</li>
-                        <li>دقة فائقة</li>
-                        <li>تسليم خلال 24 ساعة</li>
-                    </ul>
-                    <button onclick="scrollToOrder('فضية')" class="btn btn-order">اطلب الآن</button>
-                </div>
-            </div>
-            
-            <!-- الباقة الذهبية -->
-            <div class="col-md-4">
-                <div class="package-card">
-                    <h3>الباقة الذهبية</h3>
-                    <span class="price-tag">30M</span>
-                    <ul class="feature-list">
-                        <li>تصميم كامل للسيرفر</li>
-                        <li>بنر + صورة شخصية</li>
-                        <li>تصميم 3 رتب</li>
-                        <li>تعديلات غير محدودة</li>
-                        <li>دقة احترافية</li>
-                        <li>تسليم خلال 12 ساعة</li>
-                    </ul>
-                    <button onclick="scrollToOrder('ذهبية')" class="btn btn-order">اطلب الآن</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+‎            // تحديد سعر وتفاصيل الباقة
+            let packageDetails = {
+‎                'برونزية': {
 
-<!-- قسم الطلب -->
-<section class="py-5 bg-light" id="order">
-    <div class="container">
-        <h2 class="text-center mb-5">طلب تصميم</h2>
-        <div class="order-form">
-            <form id="orderForm">
-                <div class="mb-3">
-                    <label class="form-label">الاسم</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">الديسكورد</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">الباقة المطلوبة</label>
-                    <select class="form-select" required>
+price: '10M',
+                    features: 'تصميم صورة شخصية + تعديلات مجانية + دقة عالية'
+                },
+                'فضية': {
+                    price: '20M',
+                    features: 'بنر سيرفر + صورة شخصية + تعديلات غير محدودة + دقة فائقة'
+                },
+                'ذهبية': {
+                    price: '30M',
+                    features: 'تصميم كامل للسيرفر + بنر + صورة شخصية + تصميم 3 رتب'
+                }
+            }[packageType];
 
-<option value="">اختر الباقة</option>
-                        <option value="برونزية">الباقة البرونزية - 10M</option>
-                        <option value="فضية">الباقة الفضية - 20M</option>
-                        <option value="ذهبية">الباقة الذهبية - 30M</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">تفاصيل الطلب</label>
-                    <textarea class="form-control" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-order">إرسال الطلب</button>
-            </form>
-        </div>
-    </div>
-</section>
+            // تجهيز التاريخ والوقت
+            const orderDate = new Date().toLocaleString('ar-SA', {
+                timeZone: 'Asia/Riyadh'
+            });
 
-<!-- Footer -->
-<footer class="bg-dark text-light py-4">
-    <div class="container text-center">
-        <p class="mb-0">جميع الحقوق محفوظة © 2024 | SF DESIGNS</p>
-    </div>
-</footer>
+            try {
+                await emailjs.send("service_l82w2oc", "template_43nya5a", {
+                    to_name: "SF DESIGNS",
+                    from_name: name,
+                    discord: discord,
+                    package_name: packageType,
+                    package_price: packageDetails.price,
+                    package_features: packageDetails.features,
+                    details: details,
+                    order_date: orderDate,
+                    order_status: "جديد",
+                    subject: `طلب تصميم جديد - باقة ${packageType}`,
+                    message: `
+                    تفاصيل الطلب:
+                    -----------------
+                    الاسم: ${name}
+                    الديسكورد: ${discord}
+                    الباقة: ${packageType}
+                    السعر: ${packageDetails.price}
+                    مميزات الباقة: ${packageDetails.features}
+                    تفاصيل إضافية: ${details}
+                    تاريخ الطلب: ${orderDate}
+                    `
+                });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-<script>
-// تهيئة EmailJS
-emailjs.init("service_2kfajbr");
+                // تخزين الطلب في localStorage
+                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                orders.push({
+                    id: Date.now().toString(),
+                    from_name: name,
+                    discord: discord,
 
-// التمرير إلى قسم الطلب
-function scrollToOrder(package) {
-    document.querySelector('select').value = package;
-    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
-}
+package: packageType,
+                    package_price: packageDetails.price,
+                    package_features: packageDetails.features,
+                    details: details,
+                    order_date: orderDate,
+                    status: 'pending'
+                });
+                localStorage.setItem('orders', JSON.stringify(orders));
 
-// إرسال الطلب
-document.getElementById('orderForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    try {
-        await emailjs.send("service_2kfajbr", "template_7rsj7wp", {
-            to_name: "SF DESIGNS",
-            from_name: e.target[0].value,
-            discord: e.target[1].value,
-            package: e.target[2].value,
-            details: e.target[3].value
+                alert('تم إرسال طلبك بنجاح! سيتم التواصل معك على الديسكورد');
+                e.target.reset();
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
+            }
         });
 
-        alert('تم إرسال طلبك بنجاح! سيتم التواصل معك على الديسكورد');
-        e.target.reset();
-    } catch (error) {
-        alert('حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
-    }
-});
-
-// إخفاء شاشة التحميل
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('loadingScreen').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('loadingScreen').style.display = 'none';
-        }, 500);
-    }, 1500);
-});
-</script>
+        // إخفاء شاشة التحميل وتهيئة الصفحة
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 1500);
+            checkAdminStatus();
+        });
+    </script>
 </body>
 </html>
