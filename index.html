@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر التصاميم</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root {
+--primary-color: #2196F3;
+--secondary-color: #607D8B;
+--success-color: #4CAF50;
+--warning-color: #FFC107;
+--danger-color: #F44336;
+--light-color: #ECEFF1;
+--dark-color: #263238;
+}
+
+* {margin: 0;padding: 0;box-sizing: border-box;}
+body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: var(--light-color);line-height: 1.6;}
+.navbar {background-color: var(--dark-color);padding: 1rem;box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+.navbar-brand {color: white;font-size: 1.5rem;font-weight: bold;}
+.search-box {max-width: 500px;margin: 20px auto;position: relative;}
+.search-box input {padding-right: 40px;border-radius: 25px;border: 2px solid var(--primary-color);}
+.search-box i {position: absolute;right: 15px;top: 50%;transform: translateY(-50%);color: var(--primary-color);}
+.categories {padding: 20px 0;}
+.category-btn {margin: 5px;border-radius: 20px;transition: all 0.3s ease;}
+.category-btn:hover {transform: translateY(-2px);box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+.design-card {border: none;border-radius: 10px;overflow: hidden;transition: all 0.3s ease;margin-bottom: 20px;box-shadow: 0 2px 10px rgba(0,0,0,0.1);position: relative;}
+.design-card:hover {transform: translateY(-5px);box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+.design-image {height: 200px;object-fit: cover;}
+.design-price {color: var(--primary-color);font-size: 1.2rem;font-weight: bold;}
+
+.cart-floating {position: fixed;bottom: 20px;right: 20px;z-index: 1000;}
+.cart-btn {width: 60px;height: 60px;border-radius: 50%;background-color: var(--primary-color);color: white;border: none;box-shadow: 0 2px 10px rgba(0,0,0,0.2);transition: all 0.3s ease;}
+.cart-btn:hover {transform: scale(1.1);}
+.cart-badge {position: absolute;top: -8px;right: -8px;background-color: var(--danger-color);color: white;border-radius: 50%;padding: 5px 8px;font-size: 0.8rem;}
+.rating-stars {font-size: 24px;color: var(--warning-color);}
+.rating-input {font-size: 24px;cursor: pointer;}
+.rating-input .star {color: #ddd;transition: color 0.2s;}
+.rating-input .star.active,.rating-input .star:hover,.rating-input .star:hover ~ .star {color: var(--warning-color);}
+.comments-list {max-height: 300px;overflow-y: auto;padding: 10px;}
+.comment-item {background-color: var(--light-color);padding: 10px;margin-bottom: 10px;border-radius: 5px;}
+.comment-user {font-weight: bold;color: var(--primary-color);}
+.comment-date {font-size: 0.8em;color: var(--secondary-color);}
+.admin-panel {background-color: white;border-radius: 10px;padding: 20px;margin-bottom: 20px;}
+.stats-card {background-color: var(--light-color);border-radius: 10px;padding: 20px;text-align: center;margin-bottom: 15px;}
+.stats-value {font-size: 2rem;font-weight: bold;color: var(--primary-color);}
+@media (max-width: 768px) {
+.design-card {margin-bottom: 15px;}
+.cart-floating {bottom: 10px;right: 10px;}
+.cart-btn {width: 50px;height: 50px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="#">متجر التصاميم</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav me-auto">
+<li class="nav-item">
+<a class="nav-link text-white" href="#home">الرئيسية</a>
+</li>
+<li class="nav-item">
+
+<a class="nav-link text-white" href="#designs">التصاميم</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="#" id="requestDesignBtn">طلب تصميم</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="#about">عن المتجر</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-white" href="#contact">اتصل بنا</a>
+</li>
+</ul>
+<div class="auth-buttons d-flex">
+‎<!-- سيتم تحديث هذا القسم ديناميكياً -->
+</div>
+</div>
+</div>
+</nav>
+
+<!-- Search Section -->
+<div class="container mt-4">
+<div class="search-box">
+<input type="text" class="form-control" placeholder="ابحث عن تصاميم...">
+<i class="fas fa-search"></i>
+</div>
+</div>
+
+<!-- Categories Section -->
+<div class="container categories">
+<div class="d-flex justify-content-center flex-wrap">
+<button class="btn btn-outline-primary category-btn">الكل</button>
+<button class="btn btn-outline-primary category-btn">شعارات</button>
+<button class="btn btn-outline-primary category-btn">بطاقات أعمال</button>
+<button class="btn btn-outline-primary category-btn">تصاميم سوشيال ميديا</button>
+<button class="btn btn-outline-primary category-btn">بنرات</button>
+</div>
+</div>
+
+<!-- Designs Grid -->
+<div class="container" id="designsGrid">
+<div class="row">
+‎<!-- التصاميم ستضاف هنا ديناميكياً -->
+</div>
+</div>
+
+<!-- Cart Floating Button -->
+<div class="cart-floating">
+<button class="cart-btn" id="cartBtn">
+<i class="fas fa-shopping-cart"></i>
+<span class="cart-badge">0</span>
+</button>
+</div>
+
+<!-- Modals -->
+‎<!-- نموذج طلب تصميم -->
+<div class="modal fade" id="requestDesignModal">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">طلب تصميم جديد</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<form id="designRequestForm">
+<div class="mb-3">
+<label class="form-label">نوع التصميم</label>
+<select class="form-select" required name="designType">
+<option value="">اختر نوع التصميم</option>
+
+<option value="logo">شعار</option>
+<option value="business_card">بطاقة عمل</option>
+<option value="social_media">تصميم سوشيال ميديا</option>
+<option value="banner">بنر</option>
+<option value="other">أخرى</option>
+</select>
+</div>
+<div class="mb-3">
+<label class="form-label">وصف التصميم المطلوب</label>
+<textarea class="form-control" rows="4" required name="description"></textarea>
+</div>
+<div class="mb-3">
+<label class="form-label">الألوان المفضلة</label>
+<input type="text" class="form-control" name="colors">
+</div>
+<div class="mb-3">
+<label class="form-label">الميزانية المتوقعة (ريال)</label>
+<input type="number" class="form-control" required name="budget" min="100">
+</div>
+<div class="mb-3">
+<label class="form-label">المدة المطلوبة (أيام)</label>
+<input type="number" class="form-control" required name="deadline" min="1">
+</div>
+<div class="mb-3">
+<label class="form-label">ملفات مرجعية</label>
+<input type="file" class="form-control" multiple name="references">
+</div>
+<button type="submit" class="btn btn-primary">إرسال الطلب</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<!-- نموذج التعليقات -->
+<div class="modal fade" id="commentsModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">التعليقات والتقييمات</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<div class="comments-section mb-4">
+<div class="comments-list" id="commentsList"></div>
+</div>
+<form id="commentForm" class="mt-3">
+<div class="mb-3">
+<label class="form-label">تقييمك</label>
+<div class="rating-input">
+<i class="fas fa-star star" data-rating="5"></i>
+<i class="fas fa-star star" data-rating="4"></i>
+<i class="fas fa-star star" data-rating="3"></i>
+<i class="fas fa-star star" data-rating="2"></i>
+<i class="fas fa-star star" data-rating="1"></i>
+</div>
+</div>
+<div class="mb-3">
+<label class="form-label">تعليقك</label>
+<textarea class="form-control" rows="3" required name="comment"></textarea>
+</div>
+<button type="submit" class="btn btn-primary">إرسال</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<!-- نموذج تسجيل الدخول -->
+<div class="modal fade" id="authModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="authModalTitle">تسجيل الدخول</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<ul class="nav nav-tabs" id="authTabs">
+<li class="nav-item">
+<a class="nav-link active" data-bs-toggle="tab" href="#loginTab">تسجيل الدخول</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-bs-toggle="tab" href="#registerTab">حساب جديد</a>
+</li>
+</ul>
+<div class="tab-content mt-3">
+<div class="tab-pane fade show active" id="loginTab">
+<form id="loginForm">
+<div class="mb-3">
+<label class="form-label">البريد الإلكتروني</label>
+<input type="email" class="form-control" required name="email">
+</div>
+<div class="mb-3">
+<label class="form-label">كلمة المرور</label>
+<input type="password" class="form-control" required name="password">
+
+</div>
+<button type="submit" class="btn btn-primary w-100">دخول</button>
+<div class="text-center mt-3">
+<a href="#" id="forgotPasswordBtn">نسيت كلمة المرور؟</a>
+</div>
+</form>
+</div>
+<div class="tab-pane fade" id="registerTab">
+<form id="registerForm">
+<div class="mb-3">
+<label class="form-label">الاسم الكامل</label>
+<input type="text" class="form-control" required name="fullName">
+</div>
+<div class="mb-3">
+<label class="form-label">البريد الإلكتروني</label>
+<input type="email" class="form-control" required name="email">
+</div>
+<div class="mb-3">
+<label class="form-label">رقم الجوال</label>
+<input type="tel" class="form-control" required name="phone">
+</div>
+<div class="mb-3">
+<label class="form-label">كلمة المرور</label>
+<input type="password" class="form-control" required name="password">
+</div>
+<div class="mb-3">
+<label class="form-label">تأكيد كلمة المرور</label>
+<input type="password" class="form-control" required name="confirmPassword">
+</div>
+<button type="submit" class="btn btn-primary w-100">تسجيل</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- نموذج السلة -->
+<div class="modal fade" id="cartModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">سلة المشتريات</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<div id="cartItems">
+<!-- محتويات السلة ستضاف هنا -->
+</div>
+</div>
+<div class="modal-footer">
+<div class="total-price">المجموع: <span id="totalPrice">0</span> ريال</div>
+<button class="btn btn-primary" id="checkoutBtn">إتمام الشراء</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// تهيئة Supabase
+const supabaseUrl = 'YOUR_SUPABASE_URL';
+const supabaseKey = 'YOUR_SUPABASE_KEY';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// تهيئة EmailJS
+emailjs.init("YOUR_USER_ID");
+
+// متغيرات عامة
+let user = null;
+let userProfile = null;
+let cart = [];
+let currentRating = 0;
+let designs = [];
+
+// تحميل التصاميم عند بدء التطبيق
+document.addEventListener('DOMContentLoaded', async () => {
+await loadDesigns();
+checkAuthState();
+});
+
+// وظائف التصاميم
+async function loadDesigns() {
+try {
+const { data, error } = await supabase
+.from('designs')
+.select('*')
+.order('created_at', { ascending: false });
+
+if (error) throw error;
+designs = data;
+renderDesigns(designs);
+} catch (error) {
+console.error('Error loading designs:', error);
+alert('حدث خطأ أثناء تحميل التصاميم');
+}
+}
+
+function renderDesigns(designsToRender) {
+const grid = document.getElementById('designsGrid');
+grid.innerHTML = designsToRender.map(design => `
+<div class="col-md-4 col-sm-6">
+<div class="card design-card" data-category="${design.category}">
+<img src="${design.image_url}" class="card-img-top design-image" alt="${design.title}">
+<div class="card-body">
+<h5 class="card-title">${design.title}</h5>
+<p class="card-text">${design.description}</p>
+<div class="rating-stars mb-2">
+${getStarRating(design.average_rating)}
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<span class="design-price">${design.price} ريال</span>
+<button class="btn btn-primary add-to-cart" data-id="${design.id}">
+أضف للسلة
+</button>
+</div>
+<button class="btn btn-link w-100" onclick="showComments(${design.id})">
+التعليقات (${design.comments_count || 0})
+</button>
+</div>
+</div>
+</div>
+`).join('');
+
+// إضافة مستمعي الأحداث للأزرار
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.id)));
+});
+}
+
+// وظائف السلة
+function addToCart(designId) {
+if (!user) {
+showAuthModal();
+return;
+}
+
+const design = designs.find(d => d.id === designId);
+if (!design) return;
+
+const existingItem = cart.find(item => item.id === designId);
+if (existingItem) {
+existingItem.quantity++;
+} else {
+cart.push({
+id: design.id,
+title: design.title,
+price: design.price,
+quantity: 1
+});
+}
+
+updateCartUI();
+}
+
+function updateCartUI() {
+
+const badge = document.querySelector('.cart-badge');
+const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+badge.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+const cartItems = document.getElementById('cartItems');
+cartItems.innerHTML = cart.map(item => `
+<div class="cart-item mb-2">
+<div class="d-flex justify-content-between align-items-center">
+<span>${item.title}</span>
+<div>
+<button class="btn btn-sm btn-outline-danger me-2" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+<span>${item.quantity}</span>
+<button class="btn btn-sm btn-outline-success ms-2" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+</div>
+<span>${item.price * item.quantity} ريال</span>
+</div>
+</div>
+`).join('');
+
+document.getElementById('totalPrice').textContent = total;
+}
+
+// وظائف المصادقة
+async function checkAuthState() {
+const session = await supabase.auth.getSession();
+user = session?.user || null;
+if (user) {
+await loadUserProfile();
+}
+updateAuthUI();
+}
+
+async function loadUserProfile() {
+try {
+const { data, error } = await supabase
+.from('profiles')
+.select('*')
+.eq('id', user.id)
+.single();
+
+if (error) throw error;
+userProfile = data;
+} catch (error) {
+console.error('Error loading user profile:', error);
+}
+}
+
+// وظائف مساعدة
+function getStarRating(rating) {
+return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+}
+
+function showAuthModal(tab = 'login') {
+const modal = new bootstrap.Modal(document.getElementById('authModal'));
+const tabElement = document.querySelector(`#authTabs a[href="#${tab}Tab"]`);
+const tabInstance = new bootstrap.Tab(tabElement);
+tabInstance.show();
+modal.show();
+}
+
+// مستمعي الأحداث
+document.getElementById('cartBtn').addEventListener('click', () => {
+const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+cartModal.show();
+});
+
+document.getElementById('checkoutBtn').addEventListener('click', async () => {
+if (!user) {
+
+showAuthModal();
+return;
+}
+
+if (cart.length === 0) {
+alert('السلة فارغة');
+return;
+}
+
+try {
+// إنشاء الطلب
+const { data, error } = await supabase
+.from('orders')
+.insert([{
+user_id: user.id,
+items: cart,
+total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+status: 'pending'
+}]);
+
+if (error) throw error;
+
+// إرسال إيميل التأكيد
+await emailjs.send(
+"service_l82w2oc",
+"template_43nya5a",
+{
+to_email: user.email,
+order_id: data[0].id,
+total: data[0].total
+}
+);
+
+cart = [];
+updateCartUI();
+bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+alert('تم إتمام الطلب بنجاح! تم إرسال تفاصيل الطلب إلى بريدك الإلكتروني');
+
+} catch (error) {
+console.error('Error processing order:', error);
+alert('حدث خطأ أثناء معالجة الطلب');
+}
+});
+
+// تحديث حالة المصادقة
+supabase.auth.onAuthStateChange((event, session) => {
+user = session?.user || null;
+if (user) {
+loadUserProfile();
+}
+updateAuthUI();
+});
+</script>
+
+</body>
+</html>
