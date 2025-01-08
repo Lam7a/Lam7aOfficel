@@ -1,351 +1,498 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lam7a Studio - خدمات التصميم</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر التصاميم</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #607D8B;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --danger-color: #F44336;
+            --light-color: #ECEFF1;
+            --dark-color: #263238;
+        }
+        * {margin: 0;padding: 0;box-sizing: border-box;}
+        body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: var(--light-color);line-height: 1.6;}
+        .navbar {background-color: var(--dark-color);padding: 1rem;box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+        .navbar-brand {color: white;font-size: 1.5rem;font-weight: bold;}
+        .search-box {max-width: 500px;margin: 20px auto;position: relative;}
+        .search-box input {padding-right: 40px;border-radius: 25px;border: 2px solid var(--primary-color);}
+        .search-box i {position: absolute;right: 15px;top: 50%;transform: translateY(-50%);color: var(--primary-color);}
+        .categories {padding: 20px 0;}
+        .category-btn {margin: 5px;border-radius: 20px;transition: all 0.3s ease;}
+        .category-btn:hover {transform: translateY(-2px);box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+        .design-card {border: none;border-radius: 10px;overflow: hidden;transition: all 0.3s ease;margin-bottom: 20px;box-shadow: 0 2px 10px rgba(0,0,0,0.1);position: relative;}
 
-‎<!-- المكتبات -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>emailjs.init("jDE8nQ7KU9m4EJNo7");</script>
-
-<style>
-:root {
---primary: #9333EA;
---primary-dark: #7E22CE;
---secondary: #A855F7;
-}
-
-* {
-font-family: 'Cairo', sans-serif;
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-
-body {
-background: #f8f9fa;
-}
-
-.navbar {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
-padding: 20px 0;
-box-shadow: 0 4px 20px rgba(147, 51, 234, 0.2);
-}
-
-.navbar-brand {
-font-size: 2rem;
-font-weight: 700;
-color: white !important;
-}
-
-.hero {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-padding: 100px 0;
-color: white;
-text-align: center;
-margin-bottom: 50px;
-position: relative;
-}
-
-.hero h1 {
-font-size: 3.5rem;
-font-weight: 700;
-margin-bottom: 20px;
-}
-
-.hero p {
-font-size: 1.5rem;
-opacity: 0.9;
-}
-
-.card {
-border: none;
-border-radius: 20px;
-padding: 30px;
-margin: 20px 0;
-box-shadow: 0 10px 30px rgba(147, 51, 234, 0.1);
-transition: all 0.3s ease;
-background: white;
-position: relative;
-}
-
-.card:hover {
-transform: translateY(-10px);
-box-shadow: 0 15px 40px rgba(147, 51, 234, 0.2);
-}
-
-.btn-custom {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-color: white;
-border: none;
-padding: 15px 30px;
-border-radius: 12px;
-font-weight: 600;
-transition: all 0.3s ease;
-width: 100%;
-
-cursor: pointer;
-}
-
-.btn-custom:hover {
-transform: translateY(-2px);
-box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
-color: white;
-}
-
-.price {
-font-size: 2.5rem;
-font-weight: 700;
-color: var(--primary);
-margin: 25px 0;
-}
-
-.badge-custom {
-position: absolute;
-top: 20px;
-right: 20px;
-padding: 10px 25px;
-border-radius: 25px;
-background: linear-gradient(135deg, var(--primary), var(--secondary));
-color: white;
-font-weight: 600;
-}
-
-.form-control {
-padding: 15px;
-border-radius: 12px;
-border: 2px solid #e2e8f0;
-margin-bottom: 15px;
-}
-
-.form-control:focus {
-border-color: var(--primary);
-box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
-}
-
-.modal-content {
-border-radius: 20px;
-border: none;
-}
-
-.modal-header {
-background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-color: white;
-border-radius: 20px 20px 0 0;
-padding: 20px 30px;
-}
-
-.modal-body {
-padding: 30px;
-}
-
-@media (max-width: 768px) {
-.hero h1 { font-size: 2.5rem; }
-.hero p { font-size: 1.2rem; }
-.card { margin: 10px 0; }
-}
-</style>
+.design-card:hover {transform: translateY(-5px);box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+        .design-image {height: 200px;object-fit: cover;}
+        .design-price {color: var(--primary-color);font-size: 1.2rem;font-weight: bold;}
+        .cart-floating {position: fixed;bottom: 20px;right: 20px;z-index: 1000;}
+        .cart-btn {width: 60px;height: 60px;border-radius: 50%;background-color: var(--primary-color);color: white;border: none;box-shadow: 0 2px 10px rgba(0,0,0,0.2);transition: all 0.3s ease;}
+        .cart-btn:hover {transform: scale(1.1);}
+        .cart-badge {position: absolute;top: -8px;right: -8px;background-color: var(--danger-color);color: white;border-radius: 50%;padding: 5px 8px;font-size: 0.8rem;}
+        .rating-stars {font-size: 24px;color: var(--warning-color);}
+        .rating-input {font-size: 24px;cursor: pointer;}
+        .rating-input .star {color: #ddd;transition: color 0.2s;}
+        .rating-input .star.active,.rating-input .star:hover,.rating-input .star:hover ~ .star {color: var(--warning-color);}
+        .comments-list {max-height: 300px;overflow-y: auto;padding: 10px;}
+        .comment-item {background-color: var(--light-color);padding: 10px;margin-bottom: 10px;border-radius: 5px;}
+        .comment-user {font-weight: bold;color: var(--primary-color);}
+        .comment-date {font-size: 0.8em;color: var(--secondary-color);}
+        .admin-panel {background-color: white;border-radius: 10px;padding: 20px;margin-bottom: 20px;}
+        .stats-card {background-color: var(--light-color);border-radius: 10px;padding: 20px;text-align: center;margin-bottom: 15px;}
+        .stats-value {font-size: 2rem;font-weight: bold;color: var(--primary-color);}
+        @media (max-width: 768px) {
+            .design-card {margin-bottom: 15px;}
+            .cart-floating {bottom: 10px;right: 10px;}
+            .cart-btn {width: 50px;height: 50px;}
+        }
+    </style>
 </head>
 <body>
-
-<nav class="navbar navbar-dark">
-<div class="container">
-<span class="navbar-brand">Lam7a Studio</span>
-</div>
-</nav>
-
-<div class="hero">
-<div class="container">
-<h1>خدمات التصميم الاحترافية</h1>
-<p>نقدم أفضل خدمات التصميم بأسعار مناسبة</p>
-</div>
-</div>
+    <nav class="navbar navbar-expand-lg">
 
 <div class="container">
-<div class="row">
-<!-- باقة مجانية -->
-<div class="col-lg-3 col-md-6">
-<div class="card text-center">
-<span class="badge-custom">مجاني</span>
-<h3>تصميم مجاني</h3>
-<div class="price">$0</div>
-<ul class="list-unstyled">
-<li><i class="fas fa-check text-success me-2"></i>تصميم بسيط</li>
-<li><i class="fas fa-check text-success me-2"></i>تعديل واحد</li>
-<li><i class="fas fa-clock text-success me-2"></i>كل 3 أيام</li>
-</ul>
-<button onclick="createOrder('مجاني')" class="btn-custom">طلب الآن</button>
-</div>
-</div>
+            <a class="navbar-brand" href="#">متجر التصاميم</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#home">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#designs">التصاميم</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#about">عن المتجر</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#contact">اتصل بنا</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2" id="loginBtn">تسجيل الدخول</button>
+                    <button class="btn btn-primary" id="registerBtn">إنشاء حساب</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<!-- باقة 10M -->
-<div class="col-lg-3 col-md-6">
-<div class="card text-center">
-<span class="badge-custom">10M كريدت</span>
-<h3>باقة ستارت</h3>
-<div class="price">$5</div>
+    <div class="container mt-4">
+        <div class="search-box">
+            <input type="text" class="form-control" placeholder="ابحث عن تصاميم...">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
 
-<ul class="list-unstyled">
-<li><i class="fas fa-check text-success me-2"></i>10M كريدت</li>
-<li><i class="fas fa-check text-success me-2"></i>تصميم احترافي</li>
-<li><i class="fas fa-check text-success me-2"></i>تعديلين</li>
-</ul>
-<button onclick="createOrder('10M')" class="btn-custom">طلب الآن</button>
-</div>
-</div>
+    <div class="container categories">
+        <div class="d-flex justify-content-center flex-wrap">
+            <button class="btn btn-outline-primary category-btn">الكل</button>
+            <button class="btn btn-outline-primary category-btn">شعارات</button>
+            <button class="btn btn-outline-primary category-btn">بطاقات أعمال</button>
+            <button class="btn btn-outline-primary category-btn">تصاميم سوشيال ميديا</button>
 
-<!-- باقة 50M -->
-<div class="col-lg-3 col-md-6">
-<div class="card text-center">
-<span class="badge-custom">50M كريدت</span>
-<h3>باقة برو</h3>
-<div class="price">$20</div>
-<ul class="list-unstyled">
-<li><i class="fas fa-check text-success me-2"></i>50M كريدت</li>
-<li><i class="fas fa-check text-success me-2"></i>تصميم احترافي</li>
-<li><i class="fas fa-check text-success me-2"></i>تعديلات لا محدودة</li>
-</ul>
-<button onclick="createOrder('50M')" class="btn-custom">طلب الآن</button>
-</div>
-</div>
+<button class="btn btn-outline-primary category-btn">بنرات</button>
+        </div>
+    </div>
 
-<!-- باقة 100M -->
-<div class="col-lg-3 col-md-6">
-<div class="card text-center">
-<span class="badge-custom">100M كريدت</span>
-<h3>باقة بريميوم</h3>
-<div class="price">$35</div>
-<ul class="list-unstyled">
-<li><i class="fas fa-check text-success me-2"></i>100M كريدت</li>
-<li><i class="fas fa-check text-success me-2"></i>تصميم خاص</li>
-<li><i class="fas fa-check text-success me-2"></i>تعديلات لا محدودة</li>
-</ul>
-<button onclick="createOrder('100M')" class="btn-custom">طلب الآن</button>
-</div>
-</div>
-</div>
-</div>
+    <div class="container" id="designsGrid">
+        <div class="row">
+            <!-- Design cards will be dynamically added here -->
+        </div>
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="orderModal">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">طلب جديد</h5>
-<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body">
-<form id="orderForm">
-<input type="hidden" id="packageType" name="packageType">
-<input type="hidden" id="orderId" name="orderId">
-<input type="text" class="form-control" name="name" placeholder="الاسم الكامل" required>
-<input type="email" class="form-control" name="email" placeholder="البريد الإلكتروني" required>
+    <div class="cart-floating">
+        <button class="cart-btn" id="cartBtn">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge">0</span>
+        </button>
+    </div>
 
-<input type="text" class="form-control" name="discord" placeholder="معرف Discord" required>
-<textarea class="form-control" name="details" rows="4" placeholder="تفاصيل الطلب" required></textarea>
-<button type="submit" class="btn-custom">إرسال الطلب</button>
-</form>
-</div>
-</div>
-</div>
-</div>
+    <div class="modal fade" id="cartModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">سلة المشتريات</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartItems">
+                        <!-- Cart items will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="total-price">المجموع: <span id="totalPrice">0</span> ريال</div>
+                    <button class="btn btn-primary" id="checkoutBtn">إتمام الشراء</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-function createOrder(type) {
-if (type === 'مجاني' && !checkFreeOrderEligibility()) {
-Swal.fire({
-icon: 'warning',
-title: 'عذراً!',
-text: 'يمكنك طلب تصميم مجاني مرة كل 3 أيام',
-confirmButtonColor: '#9333EA'
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">تسجيل الدخول</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">البريد الإلكتروني</label>
+
+<input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">كلمة المرور</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">دخول</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">إنشاء حساب جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">الاسم الكامل</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">البريد الإلكتروني</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">كلمة المرور</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">تأكيد كلمة المرور</label>
+
+<input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">تسجيل</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize Supabase
+        const supabaseUrl = 'YOUR_SUPABASE_URL'
+        const supabaseKey = 'YOUR_SUPABASE_KEY'
+        const supabase = createClient(supabaseUrl, supabaseKey)
+
+        // Initialize EmailJS
+        emailjs.init("YOUR_USER_ID");
+
+        // Cart State
+        let cart = [];
+        let user = null;
+
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const searchInput = document.querySelector('.search-box input');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+
+        // Event Listeners
+        loginBtn.addEventListener('click', () => {
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        });
+
+        registerBtn.addEventListener('click', () => {
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+            registerModal.show();
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const { data, error } = await supabase.auth.signIn({
+                    email,
+                    password
+
 });
+
+                if (error) throw error;
+
+                user = data;
+                // Close modal and update UI
+                bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+                updateAuthUI();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPass) {
+                alert('كلمات المرور غير متطابقة');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password
+                });
+
+                if (error) throw error;
+
+                alert('تم إرسال رابط التفعيل إلى بريدك الإلكتروني');
+                bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            filterDesigns(searchTerm);
+        });
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.textContent;
+                filterDesigns('', category);
+            });
+        });
+
+        // Functions
+        async function loadDesigns() {
+            try {
+                const { data, error } = await supabase
+                    .from('designs')
+                    .select('*');
+
+if (error) throw error;
+
+renderDesigns(data);
+} catch (error) {
+console.error('Error loading designs:', error);
+alert('حدث خطأ أثناء تحميل التصاميم');
+}
+}
+
+function renderDesigns(designs) {
+const grid = document.getElementById('designsGrid');
+grid.innerHTML = designs.map(design => `
+<div class="col-md-4 col-sm-6 mb-4">
+<div class="card design-card">
+<img src="${design.image_url}" class="card-img-top design-image" alt="${design.title}">
+<div class="card-body">
+<h5 class="card-title">${design.title}</h5>
+<p class="card-text">${design.description}</p>
+<div class="rating-stars mb-2">
+${getStarRating(design.rating)}
+</div>
+<div class="d-flex justify-content-between align-items-center">
+<span class="design-price">${design.price} ريال</span>
+<button class="btn btn-primary add-to-cart" data-id="${design.id}">
+أضف للسلة
+</button>
+</div>
+</div>
+</div>
+</div>
+`).join('');
+
+// Add event listeners to cart buttons
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+btn.addEventListener('click', () => addToCart(btn.dataset.id));
+});
+}
+
+function getStarRating(rating) {
+return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+}
+
+function filterDesigns(searchTerm = '', category = 'الكل') {
+const designs = document.querySelectorAll('.design-card');
+designs.forEach(design => {
+const title = design.querySelector('.card-title').textContent.toLowerCase();
+const shouldShow = (category === 'الكل' || design.dataset.category === category) &&
+(searchTerm === '' || title.includes(searchTerm));
+design.parentElement.style.display = shouldShow ? 'block' : 'none';
+});
+}
+
+function addToCart(designId) {
+if (!user) {
+alert('يرجى تسجيل الدخول أولاً');
+const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+loginModal.show();
 return;
 }
 
-const orderNumber = 'LAM-' + Date.now().toString().slice(-6);
-document.getElementById('packageType').value = type;
-document.getElementById('orderId').value = orderNumber;
-document.getElementById('orderForm').reset();
-new bootstrap.Modal(document.getElementById('orderModal')).show();
+const design = designs.find(d => d.id === parseInt(designId));
+if (!design) return;
+
+const existingItem = cart.find(item => item.id === design.id);
+if (existingItem) {
+existingItem.quantity++;
+} else {
+cart.push({
+id: design.id,
+
+title: design.title,
+price: design.price,
+quantity: 1
+});
 }
 
-function checkFreeOrderEligibility() {
-const lastFreeOrder = localStorage.getItem('lastFreeOrder');
-if (lastFreeOrder) {
-const timeDiff = Date.now() - parseInt(lastFreeOrder);
-const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
-return daysDiff >= 3;
-}
-return true;
+updateCartUI();
 }
 
-document.getElementById('orderForm').addEventListener('submit', async function(e) {
-e.preventDefault();
-const submitBtn = this.querySelector('button[type="submit"]');
-submitBtn.disabled = true;
-submitBtn.innerHTML = 'جاري الإرسال...';
+function updateCartUI() {
+const badge = document.querySelector('.cart-badge');
+const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+badge.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+const cartItems = document.getElementById('cartItems');
+cartItems.innerHTML = cart.map(item => `
+<div class="cart-item mb-2">
+<div class="d-flex justify-content-between align-items-center">
+<span>${item.title}</span>
+<div>
+<button class="btn btn-sm btn-outline-danger me-2" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+<span>${item.quantity}</span>
+<button class="btn btn-sm btn-outline-success ms-2" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+</div>
+<span>${item.price * item.quantity} ريال</span>
+</div>
+</div>
+`).join('');
+
+document.getElementById('totalPrice').textContent = total;
+}
+
+function updateQuantity(designId, newQuantity) {
+if (newQuantity < 1) {
+cart = cart.filter(item => item.id !== designId);
+} else {
+const item = cart.find(item => item.id === designId);
+if (item) item.quantity = newQuantity;
+}
+updateCartUI();
+}
+
+function updateAuthUI() {
+const authButtons = document.querySelector('.d-flex');
+if (user) {
+authButtons.innerHTML = `
+<span class="text-white me-3">مرحباً ${user.email}</span>
+<button class="btn btn-outline-light" onclick="logout()">تسجيل خروج</button>
+`;
+} else {
+authButtons.innerHTML = `
+<button class="btn btn-outline-light me-2" id="loginBtn">تسجيل الدخول</button>
+<button class="btn btn-primary" id="registerBtn">إنشاء حساب</button>
+`;
+}
+}
+
+async function logout() {
+try {
+await supabase.auth.signOut();
+user = null;
+cart = [];
+updateAuthUI();
+updateCartUI();
+} catch (error) {
+console.error('Error logging out:', error);
+alert('حدث خطأ أثناء تسجيل الخروج');
+}
+}
+
+// Checkout process
+document.getElementById('checkoutBtn').addEventListener('click', async () => {
+if (!user) {
+
+alert('يرجى تسجيل الدخول أولاً');
+return;
+}
+
+if (cart.length === 0) {
+alert('السلة فارغة');
+return;
+}
 
 try {
-const formData = new FormData(this);
-const orderData = Object.fromEntries(formData.entries());
-
-if (orderData.packageType === 'مجاني') {
-localStorage.setItem('lastFreeOrder', Date.now().toString());
+// Create order in database
+const { data, error } = await supabase
+.from('orders')
+.insert([
+{
+user_id: user.id,
+items: cart,
+total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+status: 'pending'
 }
+]);
 
-await emailjs.send("service_l82w2oc", "template_43nya5a", {
-to_name: "Lam7a Studio",
-from_name: orderData.name,
-order_number: orderData.orderId,
-package_type: orderData.packageType,
-customer_name: orderData.name,
-customer_email: orderData.email,
-discord_id: orderData.discord,
-order_details: orderData.details,
-message: `
-‎رقم الطلب: ${orderData.orderId}
-‎الباقة: ${orderData.packageType}
-‎الاسم: ${orderData.name}
-‎البريد الإلكتروني: ${orderData.email}
-‎معرف Discord: ${orderData.discord}
-‎التفاصيل: ${orderData.details}
-`
-});
+if (error) throw error;
 
-Swal.fire({
-icon: 'success',
-title: 'تم إرسال طلبك بنجاح!',
-html: `
-<div style="text-align: right; margin: 20px;">
+// Send confirmation email
+await emailjs.send(
+"service_l82w2oc",
+"template_43nya5a",
+{
+to_email: user.email,
+order_id: data[0].id,
+total: data[0].total
+}
+);
 
-<p><strong>رقم الطلب:</strong> ${orderData.orderId}</p>
-<p><strong>الباقة:</strong> ${orderData.packageType}</p>
-<p><strong>معرف Discord:</strong> ${orderData.discord}</p>
-</div>
-`,
-confirmButtonColor: '#9333EA'
-});
+cart = [];
+updateCartUI();
+bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+alert('تم إتمام الطلب بنجاح! تم إرسال تفاصيل الطلب إلى بريدك الإلكتروني');
 
-this.reset();
-bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
 } catch (error) {
-console.error('Error:', error);
-Swal.fire({
-icon: 'error',
-title: 'حدث خطأ!',
-text: 'يرجى المحاولة مرة أخرى',
-confirmButtonColor: '#9333EA'
-});
-} finally {
-submitBtn.disabled = false;
-submitBtn.innerHTML = 'إرسال الطلب';
+console.error('Error processing order:', error);
+alert('حدث خطأ أثناء معالجة الطلب');
 }
+});
+
+// Initialize app
+loadDesigns();
+supabase.auth.onAuthStateChange((event, session) => {
+user = session?.user || null;
+updateAuthUI();
 });
 </script>
 </body>
