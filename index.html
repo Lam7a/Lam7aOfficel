@@ -300,12 +300,22 @@ localStorage.setItem('lastFreeOrder', Date.now().toString());
 }
 
 await emailjs.send("service_l82w2oc", "template_43nya5a", {
-orderNumber: orderData.orderId,
-packageType: orderData.packageType,
-name: orderData.name,
-email: orderData.email,
-discord: orderData.discord,
-details: orderData.details
+to_name: "Lam7a Studio",
+from_name: orderData.name,
+order_number: orderData.orderId,
+package_type: orderData.packageType,
+customer_name: orderData.name,
+customer_email: orderData.email,
+discord_id: orderData.discord,
+order_details: orderData.details,
+message: `
+‎رقم الطلب: ${orderData.orderId}
+‎الباقة: ${orderData.packageType}
+‎الاسم: ${orderData.name}
+‎البريد الإلكتروني: ${orderData.email}
+‎معرف Discord: ${orderData.discord}
+‎التفاصيل: ${orderData.details}
+`
 });
 
 Swal.fire({
