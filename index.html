@@ -1,220 +1,186 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر التصاميم</title>
-    <!-- CSS Libraries -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --secondary: #A78BFA;
-            --light: #EDE9FE;
-            --dark: #2D1B69;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر تصاميم البوتات</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #5865F2;
+    --primary-dark: #4752C4;
+    --secondary: #99AAB5;
+    --light: #E3E5E8;
+    --dark: #2C2F33;
+    --discord: #7289DA;
+}
 
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: #F5F3FF;
-            overflow-x: hidden;
-        }
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #F6F6F7;
+}
 
-        .navbar {
-            background: var(--primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            padding: 1rem 0;
-        }
+.navbar {
+    background: var(--dark);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
 
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: white !important;
-        }
+.hero-section {
+    background: linear-gradient(135deg, var(--primary), var(--dark));
+    padding: 100px 0;
+    color: white;
+}
 
-        .nav-link {
-            color: white !important;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+.product-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
 
-        .nav-link:hover {
-            opacity: 0.8;
-        }
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(88, 101, 242, 0.2);
+}
 
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            padding: 120px 0;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
 
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
+.btn-discord {
+    background: var(--discord);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
-        }
+.btn-discord:hover {
+    background: #5a6fb4;
+    color: white;
+}
 
-        .product-image {
-            width: 100%;
-            height: 250px;
-
-object-fit: cover;
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .btn-custom {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-custom:hover {
-            background: var(--primary-dark);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #EF4444;
-            color: white;
-            border-radius: 50%;
-            padding: 5px 8px;
-            font-size: 12px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 80px 0;
-            }
-            .navbar-brand {
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+.price-tag {
+    background: var(--primary);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-paint-brush me-2"></i>متجر التصاميم
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
 
-<a class="nav-link active" href="#home">الرئيسية</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#products">المنتجات</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-outline-light position-relative me-3" id="cartBtn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-badge" id="cartBadge">0</span>
-                    </button>
-                    <span class="text-light me-3" id="userEmail"></span>
-                    <button class="btn btn-outline-light" id="loginBtn">تسجيل دخول</button>
-                    <button class="btn btn-outline-light d-none" id="logoutBtn">تسجيل خروج</button>
-                </div>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fab fa-discord me-2"></i>متجر تصاميم البوتات
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-discord" href="https://discord.gg/your-server" target="_blank">
+                        <i class="fab fa-discord me-2"></i>انضم للسيرفر
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section text-center" id="home">
-        <div class="container">
-            <h1 class="display-4 mb-4 animate-fade-in">تصاميم إبداعية تناسب ذوقك</h1>
-            <p class="lead mb-4 animate-fade-in">نقدم أفضل التصاميم الاحترافية لمشروعك</p>
-            <a href="#products" class="btn btn-custom btn-lg animate-fade-in">تصفح المنتجات</a>
-        </div>
-    </section>
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 mb-4">تصاميم بوتات ديسكورد احترافية</h1>
+        <p class="lead mb-4">أفضل التصاميم لبوتات الديسكورد بأسعار منافسة</p>
+    </div>
+</section>
 
-    <!-- Products Section -->
-    <section class="py-5" id="products">
-        <div class="container">
-            <h2 class="text-center mb-5">منتجاتنا المميزة</h2>
-            <div class="row" id="productsContainer">
-                <!-- سيتم ملؤه بواسطة JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Cart Modal -->
-    <div class="modal fade" id="cartModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">سلة المشتريات</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-
-                </div>
-                <div class="modal-body" id="cartItems">
-                    <!-- سيتم ملؤه بواسطة JavaScript -->
-                </div>
-                <div class="modal-footer">
-                    <div class="w-100">
-                        <div class="d-flex justify-content-between mb-3">
-                            <h5>المجموع:</h5>
-                            <h5 id="cartTotal">0 ريال</h5>
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- تصميم بوت بيسك -->
+            <div class="col-md-4 mb-4">
+                <div class="product-card">
+                    <img src="https://i.imgur.com/1234.png" class="product-image" alt="Basic Bot Design">
+                    <div class="p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">تصميم بوت بيسك</h5>
+                            <span class="price-tag">10M كريدت</span>
                         </div>
-                        <button class="btn btn-custom w-100" onclick="checkout()">إتمام الطلب</button>
+                        <p class="text-muted small mb-3">
+                            - تصميم بسيط وأنيق<br>
+                            - يشمل الأوامر الأساسية<br>
+                            - دعم فني لمدة شهر
+                        </p>
+                        <a href="https://discord.gg/your-server" class="btn btn-discord w-100">
+                            <i class="fab fa-discord me-2"></i>اطلب الآن
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تصميم بوت برو -->
+            <div class="col-md-4 mb-4">
+                <div class="product-card">
+                    <img src="https://i.imgur.com/5678.png" class="product-image" alt="Pro Bot Design">
+
+<div class="p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">تصميم بوت برو</h5>
+                            <span class="price-tag">20M كريدت</span>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            - تصميم احترافي متكامل<br>
+                            - جميع المميزات المتقدمة<br>
+                            - دعم فني لمدة 3 أشهر
+                        </p>
+                        <a href="https://discord.gg/your-server" class="btn btn-discord w-100">
+                            <i class="fab fa-discord me-2"></i>اطلب الآن
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تصميم بوت مخصص -->
+            <div class="col-md-4 mb-4">
+                <div class="product-card">
+                    <img src="https://i.imgur.com/9012.png" class="product-image" alt="Custom Bot Design">
+                    <div class="p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">تصميم بوت مخصص</h5>
+                            <span class="price-tag">30M كريدت</span>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            - تصميم حسب الطلب<br>
+                            - مميزات مخصصة<br>
+                            - دعم فني غير محدود
+                        </p>
+                        <a href="https://discord.gg/your-server" class="btn btn-discord w-100">
+                            <i class="fab fa-discord me-2"></i>اطلب الآن
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // تهيئة Supabase
-        const supabaseUrl = 'https://jocgtfekndsdcfftmlhs.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-    </script>
-    <script src="main.js"></script>
+<footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+
+        <p class="mb-0">جميع الحقوق محفوظة © 2024 متجر تصاميم البوتات</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
