@@ -235,70 +235,63 @@
         }
 
         // Create Order
-        function createOrder(type) {
-            if (type === 'مجاني' && !checkFreeOrderEligibility()) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'عذراً!',
-                    text: 'يمكنك طلب تصميم مجاني مرة كل 3 أيام',
-                    confirmButtonColor: '#9333EA'
-                });
-                return;
-            }
-
-            const orderNumber = 'LAM-' + Date.now().toString().slice(-6);
-            document.getElementById('packageType').value = type;
-            document.getElementById('orderId').value = orderNumber;
-            document.getElementById('orderForm').reset();
-
-new bootstrap.Modal(document.getElementById('orderModal')).show();
-        }
-
-        // Submit Order
         document.getElementById('orderForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = 'جاري الإرسال...';
+e.preventDefault();
+const submitBtn = this.querySelector('button[type="submit"]');
+submitBtn.disabled = true;
+submitBtn.innerHTML = 'جاري الإرسال...';
 
-            try {
-                const formData = new FormData(this);
-                const orderData = Object.fromEntries(formData.entries());
+try {
+const formData = new FormData(this);
+const orderData = Object.fromEntries(formData.entries());
 
-                if (orderData.packageType === 'مجاني') {
-                    localStorage.setItem('lastFreeOrder', Date.now().toString());
-                }
+‎// الحصول على المعطيات من البيانات المرسلة
+const orderNumber = orderData.orderId;
+const name = orderData.name;
+const discord = orderData.discord;
+const email = orderData.email;
 
-                await emailjs.send("service_l82w2oc", "template_43nya5a", orderData);
+if (orderData.packageType === 'مجاني') {
+localStorage.setItem('lastFreeOrder', Date.now().toString());
+}
 
-                Swal.fire({
-                    icon: 'success',
-                    title: 'تم إرسال طلبك بنجاح!',
-                    html: `
-                        <div style="text-align: right; margin: 20px;">
-                            <p><strong>رقم الطلب:</strong> ${orderData.orderId}</p>
-                            <p><strong>الباقة:</strong> ${orderData.packageType}</p>
-                            <p><strong>معرف Discord:</strong> ${orderData.discord}</p>
-                        </div>
-                    `,
-                    confirmButtonColor: '#9333EA'
-                });
+‎// إرسال المعطيات إلى بريدك الإلكتروني
+await emailjs.send("service_l82w2oc", "template_43nya5a", {
+orderNumber: orderNumber,
+packageType: orderData.packageType,
+name: name,
+email: email,
+discord: discord,
+details: orderData.details
+});
 
-                this.reset();
-                bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
-            } catch (error) {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'حدث خطأ!',
-                    text: 'يرجى المحاولة مرة أخرى',
-                    confirmButtonColor: '#9333EA'
-                });
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'إرسال الطلب';
-            }
-        });
-    </script>
-</body>
-</html>
+‎// عرض رسالة النجاح
+Swal.fire({
+icon: 'success',
+title: 'تم إرسال طلبك بنجاح!',
+html: `
+<div style="text-align: right; margin: 20px;">
+<p><strong>رقم الطلب:</strong> ${orderData.orderId}</p>
+<p><strong>الباقة:</strong> ${orderData.packageType}</p>
+<p><strong>معرف Discord:</strong> ${orderData.discord}</p>
+</div>
+`,
+confirmButtonColor: '#9333EA'
+});
+
+‎// مسح النموذج وإخفاء النافذة المنبثقة
+this.reset();
+bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
+} catch (error) {
+console.error('Error:', error);
+Swal.fire({
+icon: 'error',
+title: 'حدث خطأ!',
+text: 'يرجى المحاولة مرة أخرى',
+confirmButtonColor: '#9333EA'
+});
+} finally {
+submitBtn.disabled = false;
+submitBtn.innerHTML = 'إرسال الطلب';
+}
+});
