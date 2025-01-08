@@ -1,226 +1,443 @@
-
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر التصاميم الإحترافية | SF DESIGNS</title>
-<meta name="description" content="أفضل متجر للتصاميم الإحترافية بأسعار تنافسية">
-<link rel="icon" type="image/x-icon" href="https://i.imgur.com/favicon.ico">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-<style>
-:root {
---primary: #8B5CF6;
---primary-dark: #7C3AED;
---secondary: #A78BFA;
---light: #EDE9FE;
---dark: #2D1B69;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SF DESIGNS | متجر التصاميم الإحترافية</title>
+    <meta name="description" content="أفضل متجر للتصاميم الإحترافية بأسعار تنافسية">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+‎        /* الألوان الرئيسية */
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --secondary: #A78BFA;
+            --light: #EDE9FE;
+            --dark: #2D1B69;
+        }
 
-body {
-font-family: system-ui, -apple-system, sans-serif;
-background: #F5F3FF;
-}
+‎        /* التنسيقات العامة */
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #F5F3FF;
+            overflow-x: hidden;
+        }
 
-.navbar {
-background: var(--primary);
-box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+‎        /* شاشة التحميل */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
 
-.hero-section {
-background: linear-gradient(135deg, var(--primary), var(--dark));
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+‎        /* القائمة العلوية */
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+‎        /* القسم الرئيسي */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+
 padding: 120px 0;
-color: white;
-}
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
 
-.stats-card {
-background: rgba(255,255,255,0.1);
-backdrop-filter: blur(10px);
-border-radius: 15px;
-padding: 20px;
-margin: 20px 0;
-}
+        /* بطاقات الإحصائيات */
+        .stats-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
 
-.product-card {
-background: white;
-border-radius: 15px;
-box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-transition: all 0.3s ease;
-margin-bottom: 30px;
-}
+        /* بطاقات المنتجات */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
 
-.product-card:hover {
-transform: translateY(-10px);
-box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
-}
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
 
-.btn-custom {
-background: var(--primary);
-color: white;
-padding: 10px 25px;
-border-radius: 8px;
-transition: all 0.3s ease;
-}
+        /* الأزرار */
+        .btn-custom {
+            background: var(--primary);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: none;
+        }
 
-.btn-custom:hover {
-background: var(--primary-dark);
-color: white;
-transform: scale(1.05);
-}
+        .btn-custom:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: scale(1.05);
+        }
 
-.price-badge {
-background: var(--primary);
-color: white;
-padding: 5px 15px;
-border-radius: 20px;
-font-weight: bold;
-}
+        /* السعر */
+        .price-badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
 
-#loadingScreen {
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: var(--primary);
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 9999;
-}
+        /* التنبيهات */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            z-index: 1000;
+        }
 
-.spinner {
-width: 50px;
-height: 50px;
-border: 5px solid #f3f3f3;
-border-top: 5px solid var(--primary-dark);
+        .success-toast {
+            background-color: #10B981;
+        }
 
-border-radius: 50%;
-animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-0% { transform: rotate(0deg); }
-100% { transform: rotate(360deg); }
-}
-</style>
+        .error-toast {
+            background-color: #EF4444;
+        }
+    </style>
 </head>
 <body>
+    <!-- شاشة التحميل -->
+    <div id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
 
-<!-- Loading Screen -->
-<div id="loadingScreen">
-<div class="spinner"></div>
-</div>
+    <!-- القائمة العلوية -->
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-<div class="container">
-<a class="navbar-brand" href="#">
-<i class="fas fa-paint-brush me-2"></i>SF DESIGNS
-</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarNav">
-<ul class="navbar-nav me-auto">
-<li class="nav-item">
-<a class="nav-link active" href="#home">الرئيسية</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="#designs">التصاميم</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="#contact">تواصل معنا</a>
-</li>
-</ul>
-<div class="d-flex align-items-center">
-<span class="text-light me-3" id="userEmail"></span>
-<button class="btn btn-outline-light" id="loginBtn">تسجيل دخول</button>
-<button class="btn btn-outline-light d-none" id="logoutBtn">تسجيل خروج</button>
-</div>
-</div>
-</div>
-</nav>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-paint-brush me-2"></i>SF DESIGNS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#designs">التصاميم</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">تواصل معنا</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-light me-3" id="userEmail"></span>
+                    <button class="btn btn-outline-light" id="loginBtn">تسجيل دخول</button>
+                    <button class="btn btn-outline-light d-none" id="logoutBtn">تسجيل خروج</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<!-- Hero Section -->
-<section class="hero-section text-center" id="home">
-<div class="container">
-<h1 class="display-4 mb-4">تصاميم إحترافية تناسب ذوقك</h1>
-<p class="lead mb-4">نقدم أفضل التصاميم الإحترافية بأسعار تنافسية</p>
-<div class="row stats-card">
-<div class="col-md-4">
-<h3 class="mb-0" id="usersCount">0</h3>
-<p class="mb-0">عميل سعيد</p>
-</div>
-<div class="col-md-4">
-<h3 class="mb-0">50+</h3>
-<p class="mb-0">تصميم متوفر</p>
-</div>
-<div class="col-md-4">
-<h3 class="mb-0" id="ordersCount">0</h3>
-<p class="mb-0">طلب منفذ</p>
-</div>
-</div>
-</div>
-</section>
+    <!-- القسم الرئيسي -->
+    <section class="hero-section text-center" id="home">
+        <div class="container">
+            <h1 class="display-4 mb-4">تصاميم إحترافية تناسب ذوقك</h1>
+            <p class="lead mb-4">نقدم أفضل التصاميم الإحترافية بأسعار تنافسية</p>
+            <div class="row stats-card">
+                <div class="col-md-4">
+                    <h3 class="mb-0" id="usersCount">0</h3>
+                    <p class="mb-0">عميل سعيد</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="mb-0">50+</h3>
+                    <p class="mb-0">تصميم متوفر</p>
 
-<!-- Designs Section -->
-<section class="py-5" id="designs">
-<div class="container">
-<h2 class="text-center mb-5">تصاميمنا المميزة</h2>
-<div class="row" id="designsContainer"></div>
 </div>
-</section>
+                <div class="col-md-4">
+                    <h3 class="mb-0" id="ordersCount">0</h3>
+                    <p class="mb-0">طلب منفذ</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Contact Section -->
+    <!-- قسم التصاميم -->
+    <section class="py-5" id="designs">
+        <div class="container">
+            <h2 class="text-center mb-5">تصاميمنا المميزة</h2>
+            <div class="row" id="designsContainer"></div>
+        </div>
+    </section>
 
-<section class="py-5 bg-light" id="contact">
-<div class="container">
-<h2 class="text-center mb-5">تواصل معنا</h2>
-<div class="row justify-content-center">
-<div class="col-md-6">
-<div class="card shadow-sm">
-<div class="card-body p-4">
-<form id="contactForm">
-<div class="mb-3">
-<label class="form-label">البريد الإلكتروني</label>
-<input type="email" class="form-control" id="emailInput" required>
-</div>
-<div class="mb-3">
-<label class="form-label">الرسالة</label>
-<textarea class="form-control" id="messageInput" rows="4" required></textarea>
-</div>
-<button type="submit" class="btn btn-custom w-100">إرسال</button>
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+    <!-- قسم التواصل -->
+    <section class="py-5 bg-light" id="contact">
+        <div class="container">
+            <h2 class="text-center mb-5">تواصل معنا</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <form id="contactForm">
+                                <div class="mb-3">
+                                    <label class="form-label">البريد الإلكتروني</label>
+                                    <input type="email" class="form-control" id="emailInput" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">الرسالة</label>
+                                    <textarea class="form-control" id="messageInput" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-custom w-100">إرسال</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Footer -->
-<footer class="bg-dark text-light py-4">
-<div class="container text-center">
-<p class="mb-0">جميع الحقوق محفوظة © 2024 | SF DESIGNS</p>
-</div>
-</footer>
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p class="mb-0">جميع الحقوق محفوظة © 2024 | SF DESIGNS</p>
+        </div>
+    </footer>
 
-<!-- Scripts -->
+    <!-- Scripts -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-<script>
-// تهيئة Supabase
-const supabaseUrl = 'https://jocgtfekndsdcfftmlhs.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <script>
+        // تهيئة Supabase
+        const supabaseUrl = 'https://jocgtfekndsdcfftmlhs.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// تهيئة EmailJS
-emailjs.init("service_2kfajbr");
+        // تهيئة EmailJS
+        emailjs.init("service_2kfajbr");
+
+        // بيانات التصاميم
+        const designs = [
+            {
+                id: 1,
+                name: "تصميم صورة شخصية احترافية",
+                price: "10M",
+                image: "https://i.imgur.com/design1.jpg",
+                description: "تصميم صورة بروفايل مميزة تعكس شخصيتك"
+            },
+            {
+                id: 2,
+                name: "تصميم بنر سيرفر",
+                price: "15M",
+                image: "https://i.imgur.com/design2.jpg",
+                description: "بنر احترافي لسيرفر الديسكورد"
+            },
+            {
+                id: 3,
+                name: "تصميم لوجو",
+                price: "20M",
+                image: "https://i.imgur.com/design3.jpg",
+                description: "لوجو مميز لمشروعك أو قناتك"
+            }
+        ];
+
+        // عرض التصاميم
+        function displayDesigns() {
+            const container = document.getElementById('designsContainer');
+            container.innerHTML = designs.map(design => `
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="${design.image}" class="card-img-top" alt="${design.name}">
+                        <div class="card-body">
+
+<h5 class="card-title">${design.name}</h5>
+                            <p class="card-text text-muted">${design.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-badge">${design.price} كريدت</span>
+                                <button onclick="orderDesign(${design.id})" class="btn btn-custom">
+                                    طلب التصميم
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // طلب تصميم
+        async function orderDesign(designId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                showToast('يجب تسجيل الدخول أولاً', 'error');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            const design = designs.find(d => d.id === designId);
+
+            try {
+                // إرسال الطلب عبر EmailJS
+                await emailjs.send('service_2kfajbr', 'template_7rsj7wp', {
+                    to_name: "SF DESIGNS",
+                    from_name: user.email,
+                    design_name: design.name,
+                    design_price: design.price,
+                    message: `طلب تصميم جديد: ${design.name}`
+                });
+
+                showToast('تم إرسال طلبك بنجاح!', 'success');
+                updateStats();
+            } catch (err) {
+                console.error('Error:', err);
+                showToast('حدث خطأ في إرسال الطلب', 'error');
+            }
+        }
+
+        // تحديث الإحصائيات
+        async function updateStats() {
+            try {
+                const { count: usersCount } = await supabase
+                    .from('profiles')
+                    .select('*', { count: 'exact' });
+
+const { count: ordersCount } = await supabase
+                    .from('orders')
+                    .select('*', { count: 'exact' });
+
+                document.getElementById('usersCount').textContent = usersCount || 0;
+                document.getElementById('ordersCount').textContent = ordersCount || 0;
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // إظهار رسائل للمستخدم
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('
+function showToast(message, type = 'success') {
+const toast = document.createElement('div');
+toast.className = `toast ${type}-toast`;
+toast.innerHTML = message;
+document.body.appendChild(toast);
+setTimeout(() => toast.remove(), 3000);
+}
+
+// التحقق من حالة تسجيل الدخول
+async function checkAuthStatus() {
+try {
+const { data: { user }, error } = await supabase.auth.getUser();
+
+if (user) {
+document.getElementById('userEmail').textContent = user.email;
+document.getElementById('loginBtn').classList.add('d-none');
+document.getElementById('logoutBtn').classList.remove('d-none');
+localStorage.setItem('user', JSON.stringify(user));
+} else {
+document.getElementById('userEmail').textContent = '';
+document.getElementById('loginBtn').classList.remove('d-none');
+document.getElementById('logoutBtn').classList.add('d-none');
+}
+} catch (error) {
+console.error('Error checking auth status:', error);
+}
+}
+
+// نموذج التواصل
+document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
+e.preventDefault();
+const email = document.getElementById('emailInput').value;
+const message = document.getElementById('messageInput').value;
+
+try {
+await emailjs.send('service_2kfajbr', 'template_7rsj7wp', {
+to_name: "SF DESIGNS",
+from_name: email,
+message: message
+});
+
+showToast('تم إرسال رسالتك بنجاح!', 'success');
+e.target.reset();
+} catch (error) {
+console.error('Error:', error);
+showToast('حدث خطأ في إرسال الرسالة', 'error');
+}
+});
+
+// تسجيل الخروج
+document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+try {
+await supabase.auth.signOut();
+localStorage.removeItem('user');
+window.location.href = 'login.html';
+showToast('تم تسجيل الخروج بنجاح', 'success');
+} catch (error) {
+console.error('Error:', error);
+showToast('حدث خطأ أثناء تسجيل الخروج', 'error');
+}
+});
+
+// زر تسجيل الدخول
+document.getElementById('loginBtn')?.addEventListener('click', () => {
+window.location.href = 'login.html';
+});
+
+// إخفاء شاشة التحميل
+
+window.addEventListener('load', () => {
+setTimeout(() => {
+const loadingScreen = document.getElementById('loadingScreen');
+loadingScreen.style.opacity = '0';
+setTimeout(() => {
+loadingScreen.style.display = 'none';
+document.body.style.overflow = 'auto';
+}, 500);
+}, 1500);
+});
+
+// تهيئة الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+displayDesigns();
+updateStats();
+checkAuthStatus();
+});
 </script>
-<script src="main.js"></script>
-
 </body>
 </html>
