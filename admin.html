@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SF DESIGNS | لوحة التحكم</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #8B5CF6;
+    --primary-dark: #7C3AED;
+    --secondary: #A78BFA;
+    --light: #EDE9FE;
+    --dark: #2D1B69;
+}
+
+body {
+    background: linear-gradient(135deg, var(--primary), var(--dark));
+    min-height: 100vh;
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.admin-login {
+    max-width: 400px;
+    margin: 100px auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.admin-panel {
+    display: none;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-custom {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.btn-custom:hover {
+    background: var(--primary-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+}
+
+.order-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.status-pending {
+    background: #FEF3C7;
+    color: #D97706;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.status-completed {
+    background: #D1FAE5;
+    color: #059669;
+    padding: 5px 15px;
+
+border-radius: 20px;
+    font-size: 14px;
+}
+
+.status-cancelled {
+    background: #FEE2E2;
+    color: #DC2626;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.form-control, .form-select {
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #E5E7EB;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.stats-card {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+}
+
+.stats-card h2 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="admin-login" id="loginScreen">
+    <h3 class="text-center mb-4">
+        <i class="fas fa-user-shield me-2"></i>
+        تسجيل دخول المشرف
+    </h3>
+    <form id="adminLoginForm">
+        <div class="mb-3">
+            <label class="form-label">اسم المستخدم</label>
+            <input type="text" class="form-control" id="username" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">كلمة المرور</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+        <button type="submit" class="btn btn-custom w-100">
+            <i class="fas fa-sign-in-alt me-2"></i>
+            دخول
+        </button>
+    </form>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-tachometer-alt me-2"></i>لوحة التحكم</h2>
+            <button onclick="logout()" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                تسجيل خروج
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="stats-card">
+
+<i class="fas fa-clock fa-2x mb-2"></i>
+                    <h4>الطلبات الجديدة</h4>
+                    <h2 id="pendingCount">0</h2>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="stats-card">
+                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    <h4>الطلبات المكتملة</h4>
+                    <h2 id="completedCount">0</h2>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="stats-card">
+                    <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                    <h4>إجمالي الطلبات</h4>
+                    <h2 id="totalCount">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="order-card">
+            <h4 class="mb-4">
+                <i class="fas fa-list-alt me-2"></i>
+                آخر الطلبات
+            </h4>
+            <div id="ordersList"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// بيانات المشرفين
+const admins = [
+    { username: 'admin1', password: 'sf123' },
+    { username: 'admin2', password: 'sf456' }
+];
+
+// التحقق من تسجيل الدخول
+document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const admin = admins.find(a => a.username === username && a.password === password);
+
+    if (admin) {
+        localStorage.setItem('adminLoggedIn', 'true');
+        showAdminPanel();
+    } else {
+        alert('بيانات تسجيل الدخول غير صحيحة');
+    }
+});
+
+function showAdminPanel() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadOrders();
+}
+
+function logout() {
+    localStorage.removeItem('adminLoggedIn');
+    location.reload();
+}
+
+function loadOrders() {
+
+const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    updateStats(orders);
+    displayOrders(orders);
+}
+
+function updateStats(orders) {
+    const pending = orders.filter(o => !o.status || o.status === 'pending').length;
+    const completed = orders.filter(o => o.status === 'completed').length;
+
+    document.getElementById('pendingCount').textContent = pending;
+    document.getElementById('completedCount').textContent = completed;
+    document.getElementById('totalCount').textContent = orders.length;
+}
+
+function displayOrders(orders) {
+    const ordersList = document.getElementById('ordersList');
+    ordersList.innerHTML = orders.length ? orders.map(order => `
+        <div class="order-card">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5><i class="fas fa-user me-2"></i>${order.from_name}</h5>
+                <span class="status-${order.status || 'pending'}">
+                    ${getStatusText(order.status)}
+                </span>
+            </div>
+            <p><i class="fab fa-discord me-2"></i>${order.discord}</p>
+            <p><i class="fas fa-box me-2"></i>${order.package}</p>
+            <p><i class="fas fa-info-circle me-2"></i>${order.details}</p>
+            <div class="mt-3">
+                <button onclick="updateOrderStatus('${order.id}', 'completed')" class="btn btn-success btn-sm">
+                    <i class="fas fa-check me-2"></i>تم التنفيذ
+                </button>
+                <button onclick="updateOrderStatus('${order.id}', 'cancelled')" class="btn btn-danger btn-sm">
+                    <i class="fas fa-times me-2"></i>إلغاء
+                </button>
+            </div>
+        </div>
+    `).join('') : '<p class="text-center">لا توجد طلبات حالياً</p>';
+}
+
+function updateOrderStatus(orderId, status) {
+    let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const orderIndex = orders.findIndex(o => o.id === orderId);
+    if (orderIndex !== -1) {
+
+        orders[orderIndex].status = status;
+        localStorage.setItem('orders', JSON.stringify(orders));
+        loadOrders();
+    }
+}
+
+function getStatusText(status) {
+    switch(status) {
+        case 'completed': return 'مكتمل';
+        case 'cancelled': return 'ملغي';
+        default: return 'قيد الانتظار';
+    }
+}
+
+window.onload = () => {
+    if (localStorage.getItem('adminLoggedIn') === 'true') {
+        showAdminPanel();
+    }
+};
+</script>
+
+</body>
+</html>
