@@ -1,272 +1,98 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول | متجر التصاميم</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --light: #EDE9FE;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول | SF DESIGNS</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root {
+--primary: #8B5CF6;
+--primary-dark: #7C3AED;
+}
 
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 20px;
-        }
+body {
 
-        .login-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
+background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+min-height: 100vh;
+display: flex;
+align-items: center;
+}
 
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+.login-card {
+background: white;
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+padding: 2rem;
+}
 
-        .logo i {
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
+.btn-custom {
+background: var(--primary);
+color: white;
+border: none;
+padding: 10px 25px;
+border-radius: 8px;
+transition: all 0.3s ease;
+}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-control {
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid var(--light);
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-
+.btn-custom:hover {
 background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            border: 2px solid var(--light);
-            background: transparent;
-            color: var(--primary);
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline:hover {
-            background: var(--light);
-            color: var(--primary-dark);
-        }
-
-        .separator {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .separator::before,
-        .separator::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 45%;
-            height: 1px;
-            background: var(--light);
-        }
-
-        .separator::before { left: 0; }
-        .separator::after { right: 0; }
-
-        .alert {
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        .shake {
-            animation: shake 0.8s ease;
-        }
-    </style>
+color: white;
+}
+</style>
 </head>
 <body>
-    <div class="login-container">
-        <!-- Logo -->
-        <div class="logo">
-            <i class="fas fa-paint-brush mb-3"></i>
-            <h2>متجر التصاميم</h2>
-            <p class="text-muted">مرحباً بعودتك!</p>
-        </div>
-
-        <!-- رسائل التنبيه -->
-        <div class="alert alert-danger" id="errorAlert" role="alert"></div>
-        <div class="alert alert-success" id="successAlert" role="alert"></div>
-
-        <!-- نموذج تسجيل الدخول -->
-        <form id="loginForm">
-            <div class="form-group">
-
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-5">
+<div class="login-card">
+<h2 class="text-center mb-4">تسجيل الدخول</h2>
+<form id="loginForm">
+<div class="mb-3">
 <label class="form-label">البريد الإلكتروني</label>
-                <input type="email" class="form-control" name="email" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">كلمة المرور</label>
-                <input type="password" class="form-control" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary mb-3">
-                تسجيل الدخول
-                <i class="fas fa-arrow-right ms-2"></i>
-            </button>
-        </form>
-
-        <div class="separator">أو</div>
-
-        <!-- زر إنشاء حساب جديد -->
-        <button class="btn btn-outline" id="showRegister">
-            إنشاء حساب جديد
-            <i class="fas fa-user-plus ms-2"></i>
-        </button>
-
-        <div class="text-center mt-4">
-            <a href="index.html" class="text-decoration-none text-muted">
-                <i class="fas fa-arrow-left me-2"></i>
-                العودة للرئيسية
-            </a>
-        </div>
-    </div>
-
-    <!-- نافذة التسجيل -->
-    <div class="modal fade" id="registerModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">إنشاء حساب جديد</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="registerForm">
-                        <div class="form-group">
-                            <label class="form-label">البريد الإلكتروني</label>
-                            <input type="email" class="form-control" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">كلمة المرور</label>
-                            <input type="password" class="form-control" name="password" required>
-
+<input type="email" class="form-control" id="emailInput" required>
 </div>
-                        <button type="submit" class="btn btn-primary">
-                            تسجيل
-                            <i class="fas fa-check ms-2"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="mb-3">
+<label class="form-label">كلمة المرور</label>
+<input type="password" class="form-control" id="passwordInput" required>
+</div>
+<button type="submit" class="btn btn-custom w-100 mb-3">تسجيل الدخول</button>
+<div class="text-center">
+<a href="index.html" class="text-decoration-none">العودة للرئيسية</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // تهيئة Supabase
-        const supabase = createClient(
-            'https://jocgtfekndsdcfftmlhs.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk'
-        );
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const supabaseUrl = 'https://jocgtfekndsdcfftmlhs.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // إظهار رسائل التنبيه
-        function showAlert(type, message) {
-            const alert = document.getElementById(`${type}Alert`);
-            alert.textContent = message;
-            alert.style.display = 'block';
-            setTimeout(() => alert.style.display = 'none', 3000);
-        }
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+e.preventDefault();
+const email = document.getElementById('emailInput').value;
+const password = document.getElementById('passwordInput').value;
 
-        // معالجة تسجيل الدخول
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target;
-            
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: form.email.value,
-                    password: form.password.value
-                });
+try {
 
-                if (error) throw error;
+const { data: { user }, error } = await supabase.auth.signInWithPassword({
+email,
+password
+});
 
-                localStorage.setItem('user', JSON.stringify(data.user));
-                window.location.href = 'index.html';
-            } catch (error) {
-                showAlert('error', 'فشل تسجيل الدخول. تأكد من صحة البيانات.');
-                form.classList.add('shake');
-                setTimeout(() => form.classList.remove('shake'), 800);
+if (error) throw error;
 
-            }
-        });
-
-        // إظهار نافذة التسجيل
-        document.getElementById('showRegister').addEventListener('click', () => {
-            const modal = new bootstrap.Modal(document.getElementById('registerModal'));
-            modal.show();
-        });
-
-        // معالجة التسجيل
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target;
-
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: form.email.value,
-                    password: form.password.value
-                });
-
-                if (error) throw error;
-
-                showAlert('success', 'تم التسجيل بنجاح! تفقد بريدك الإلكتروني.');
-                bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
-            } catch (error) {
-                showAlert('error', 'فشل التسجيل. حاول مرة أخرى.');
-            }
-        });
-    </script>
+localStorage.setItem('user', JSON.stringify(user));
+window.location.href = 'index.html';
+} catch (error) {
+alert('خطأ في تسجيل الدخول: ' + error.message);
+}
+});
+</script>
 </body>
 </html>
