@@ -1,442 +1,347 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SF DESIGNS | متجر التصاميم الإحترافية</title>
-    <meta name="description" content="أفضل متجر للتصاميم الإحترافية بأسعار تنافسية">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <style>
-‎        /* الألوان الرئيسية */
-        :root {
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --secondary: #A78BFA;
-            --light: #EDE9FE;
-            --dark: #2D1B69;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SF DESIGNS | تصاميم احترافية</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #8B5CF6;
+    --primary-dark: #7C3AED;
+    --secondary: #A78BFA;
+    --light: #EDE9FE;
+    --dark: #2D1B69;
+}
 
-‎        /* التنسيقات العامة */
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: #F5F3FF;
-            overflow-x: hidden;
-        }
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #F5F3FF;
+    overflow-x: hidden;
+}
 
-‎        /* شاشة التحميل */
-        #loadingScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s;
-        }
+.navbar {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    padding: 20px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+.hero-section {
+    background: linear-gradient(135deg, var(--primary), var(--dark));
+    padding: 150px 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.hero-section::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: url('https://i.imgur.com/pattern.png');
+    opacity: 0.1;
+    animation: move 20s linear infinite;
+}
 
-‎        /* القائمة العلوية */
-        .navbar {
-            background: var(--primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+@keyframes move {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-50%); }
+}
 
-‎        /* القسم الرئيسي */
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
+.package-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-padding: 120px 0;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
+.package-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+}
 
-        /* بطاقات الإحصائيات */
-        .stats-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
+.package-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+}
 
-        /* بطاقات المنتجات */
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
+.price-tag {
+    background: var(--primary);
+    color: white;
+    padding: 8px 20px;
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
-        }
+border-radius: 50px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px 0;
+}
 
-        /* الأزرار */
-        .btn-custom {
-            background: var(--primary);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: none;
-        }
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
 
-        .btn-custom:hover {
-            background: var(--primary-dark);
-            color: white;
-            transform: scale(1.05);
-        }
+.feature-list li {
+    margin: 10px 0;
+    padding-right: 25px;
+    position: relative;
+}
 
-        /* السعر */
-        .price-badge {
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
+.feature-list li::before {
+    content: '✓';
+    color: var(--primary);
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+}
 
-        /* التنبيهات */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            min-width: 200px;
-            padding: 15px;
-            border-radius: 10px;
-            color: white;
-            z-index: 1000;
-        }
+.btn-order {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: 100%;
+}
 
-        .success-toast {
-            background-color: #10B981;
-        }
+.btn-order:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+    color: white;
+}
 
-        .error-toast {
-            background-color: #EF4444;
-        }
-    </style>
+.order-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255,255,255,0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
 </head>
 <body>
-    <!-- شاشة التحميل -->
-    <div id="loadingScreen">
-        <div class="loading-spinner"></div>
-    </div>
 
-    <!-- القائمة العلوية -->
-
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-paint-brush me-2"></i>SF DESIGNS
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#home">الرئيسية</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#designs">التصاميم</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">تواصل معنا</a>
-                    </li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span class="text-light me-3" id="userEmail"></span>
-                    <button class="btn btn-outline-light" id="loginBtn">تسجيل دخول</button>
-                    <button class="btn btn-outline-light d-none" id="logoutBtn">تسجيل خروج</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- القسم الرئيسي -->
-    <section class="hero-section text-center" id="home">
-        <div class="container">
-            <h1 class="display-4 mb-4">تصاميم إحترافية تناسب ذوقك</h1>
-            <p class="lead mb-4">نقدم أفضل التصاميم الإحترافية بأسعار تنافسية</p>
-            <div class="row stats-card">
-                <div class="col-md-4">
-                    <h3 class="mb-0" id="usersCount">0</h3>
-                    <p class="mb-0">عميل سعيد</p>
-                </div>
-                <div class="col-md-4">
-                    <h3 class="mb-0">50+</h3>
-                    <p class="mb-0">تصميم متوفر</p>
-
+<!-- شاشة التحميل -->
+<div id="loadingScreen">
+    <div class="loading-spinner"></div>
 </div>
-                <div class="col-md-4">
-                    <h3 class="mb-0" id="ordersCount">0</h3>
-                    <p class="mb-0">طلب منفذ</p>
+
+<!-- القائمة العلوية -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-paint-brush me-2"></i>SF DESIGNS
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+
+</button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#packages">الباقات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#order">طلب تصميم</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- القسم الرئيسي -->
+<section class="hero-section text-center" id="home">
+    <div class="container">
+        <h1 class="display-4 mb-4">تصاميم احترافية تناسب ذوقك</h1>
+        <p class="lead mb-5">نقدم أفضل التصاميم الإحترافية بأسعار تنافسية</p>
+        <a href="#packages" class="btn btn-light btn-lg">استكشف باقاتنا</a>
+    </div>
+</section>
+
+<!-- قسم الباقات -->
+<section class="py-5" id="packages">
+    <div class="container">
+        <h2 class="text-center mb-5">باقاتنا المميزة</h2>
+        <div class="row">
+            <!-- الباقة البرونزية -->
+            <div class="col-md-4">
+                <div class="package-card">
+                    <h3>الباقة البرونزية</h3>
+                    <span class="price-tag">10M</span>
+                    <ul class="feature-list">
+                        <li>تصميم صورة شخصية</li>
+                        <li>تعديلات مجانية</li>
+                        <li>دقة عالية</li>
+                        <li>تسليم سريع</li>
+                    </ul>
+                    <button onclick="scrollToOrder('برونزية')" class="btn btn-order">اطلب الآن</button>
+                </div>
+            </div>
+            
+            <!-- الباقة الفضية -->
+            <div class="col-md-4">
+                <div class="package-card">
+                    <h3>الباقة الفضية</h3>
+                    <span class="price-tag">20M</span>
+                    <ul class="feature-list">
+
+<li>بنر سيرفر ديسكورد</li>
+                        <li>تصميم صورة شخصية</li>
+                        <li>تعديلات غير محدودة</li>
+                        <li>دقة فائقة</li>
+                        <li>تسليم خلال 24 ساعة</li>
+                    </ul>
+                    <button onclick="scrollToOrder('فضية')" class="btn btn-order">اطلب الآن</button>
+                </div>
+            </div>
+            
+            <!-- الباقة الذهبية -->
+            <div class="col-md-4">
+                <div class="package-card">
+                    <h3>الباقة الذهبية</h3>
+                    <span class="price-tag">30M</span>
+                    <ul class="feature-list">
+                        <li>تصميم كامل للسيرفر</li>
+                        <li>بنر + صورة شخصية</li>
+                        <li>تصميم 3 رتب</li>
+                        <li>تعديلات غير محدودة</li>
+                        <li>دقة احترافية</li>
+                        <li>تسليم خلال 12 ساعة</li>
+                    </ul>
+                    <button onclick="scrollToOrder('ذهبية')" class="btn btn-order">اطلب الآن</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- قسم التصاميم -->
-    <section class="py-5" id="designs">
-        <div class="container">
-            <h2 class="text-center mb-5">تصاميمنا المميزة</h2>
-            <div class="row" id="designsContainer"></div>
-        </div>
-    </section>
-
-    <!-- قسم التواصل -->
-    <section class="py-5 bg-light" id="contact">
-        <div class="container">
-            <h2 class="text-center mb-5">تواصل معنا</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card shadow-sm">
-                        <div class="card-body p-4">
-                            <form id="contactForm">
-                                <div class="mb-3">
-                                    <label class="form-label">البريد الإلكتروني</label>
-                                    <input type="email" class="form-control" id="emailInput" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">الرسالة</label>
-                                    <textarea class="form-control" id="messageInput" rows="4" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-custom w-100">إرسال</button>
-                            </form>
-                        </div>
-                    </div>
+<!-- قسم الطلب -->
+<section class="py-5 bg-light" id="order">
+    <div class="container">
+        <h2 class="text-center mb-5">طلب تصميم</h2>
+        <div class="order-form">
+            <form id="orderForm">
+                <div class="mb-3">
+                    <label class="form-label">الاسم</label>
+                    <input type="text" class="form-control" required>
                 </div>
-            </div>
-        </div>
-    </section>
+                <div class="mb-3">
+                    <label class="form-label">الديسكورد</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الباقة المطلوبة</label>
+                    <select class="form-select" required>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
-        <div class="container text-center">
-            <p class="mb-0">جميع الحقوق محفوظة © 2024 | SF DESIGNS</p>
+<option value="">اختر الباقة</option>
+                        <option value="برونزية">الباقة البرونزية - 10M</option>
+                        <option value="فضية">الباقة الفضية - 20M</option>
+                        <option value="ذهبية">الباقة الذهبية - 30M</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">تفاصيل الطلب</label>
+                    <textarea class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-order">إرسال الطلب</button>
+            </form>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <!-- Scripts -->
+<!-- Footer -->
+<footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+        <p class="mb-0">جميع الحقوق محفوظة © 2024 | SF DESIGNS</p>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-    <script>
-        // تهيئة Supabase
-        const supabaseUrl = 'https://jocgtfekndsdcfftmlhs.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpvY2d0ZmVrbmRzZGNmZnRtbGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzMzMyNzUsImV4cCI6MjA1MTkwOTI3NX0.tTW9sM6cVknt7N01AWTEJwyzxlxZdIksc0pxyLptLSk';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+<script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+<script>
+// تهيئة EmailJS
+emailjs.init("service_2kfajbr");
 
-        // تهيئة EmailJS
-        emailjs.init("service_2kfajbr");
-
-        // بيانات التصاميم
-        const designs = [
-            {
-                id: 1,
-                name: "تصميم صورة شخصية احترافية",
-                price: "10M",
-                image: "https://i.imgur.com/design1.jpg",
-                description: "تصميم صورة بروفايل مميزة تعكس شخصيتك"
-            },
-            {
-                id: 2,
-                name: "تصميم بنر سيرفر",
-                price: "15M",
-                image: "https://i.imgur.com/design2.jpg",
-                description: "بنر احترافي لسيرفر الديسكورد"
-            },
-            {
-                id: 3,
-                name: "تصميم لوجو",
-                price: "20M",
-                image: "https://i.imgur.com/design3.jpg",
-                description: "لوجو مميز لمشروعك أو قناتك"
-            }
-        ];
-
-        // عرض التصاميم
-        function displayDesigns() {
-            const container = document.getElementById('designsContainer');
-            container.innerHTML = designs.map(design => `
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="${design.image}" class="card-img-top" alt="${design.name}">
-                        <div class="card-body">
-
-<h5 class="card-title">${design.name}</h5>
-                            <p class="card-text text-muted">${design.description}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-badge">${design.price} كريدت</span>
-                                <button onclick="orderDesign(${design.id})" class="btn btn-custom">
-                                    طلب التصميم
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // طلب تصميم
-        async function orderDesign(designId) {
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) {
-                showToast('يجب تسجيل الدخول أولاً', 'error');
-                setTimeout(() => window.location.href = 'login.html', 1500);
-                return;
-            }
-
-            const design = designs.find(d => d.id === designId);
-
-            try {
-                // إرسال الطلب عبر EmailJS
-                await emailjs.send('service_2kfajbr', 'template_7rsj7wp', {
-                    to_name: "SF DESIGNS",
-                    from_name: user.email,
-                    design_name: design.name,
-                    design_price: design.price,
-                    message: `طلب تصميم جديد: ${design.name}`
-                });
-
-                showToast('تم إرسال طلبك بنجاح!', 'success');
-                updateStats();
-            } catch (err) {
-                console.error('Error:', err);
-                showToast('حدث خطأ في إرسال الطلب', 'error');
-            }
-        }
-
-        // تحديث الإحصائيات
-        async function updateStats() {
-            try {
-                const { count: usersCount } = await supabase
-                    .from('profiles')
-                    .select('*', { count: 'exact' });
-
-const { count: ordersCount } = await supabase
-                    .from('orders')
-                    .select('*', { count: 'exact' });
-
-                document.getElementById('usersCount').textContent = usersCount || 0;
-                document.getElementById('ordersCount').textContent = ordersCount || 0;
-            } catch (error) {
-                console.error('Error updating stats:', error);
-            }
-        }
-
-        // إظهار رسائل للمستخدم
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('
-function showToast(message, type = 'success') {
-const toast = document.createElement('div');
-toast.className = `toast ${type}-toast`;
-toast.innerHTML = message;
-document.body.appendChild(toast);
-setTimeout(() => toast.remove(), 3000);
+// التمرير إلى قسم الطلب
+function scrollToOrder(package) {
+    document.querySelector('select').value = package;
+    document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
 }
 
-// التحقق من حالة تسجيل الدخول
-async function checkAuthStatus() {
-try {
-const { data: { user }, error } = await supabase.auth.getUser();
+// إرسال الطلب
+document.getElementById('orderForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    try {
+        await emailjs.send("service_2kfajbr", "template_7rsj7wp", {
+            to_name: "SF DESIGNS",
+            from_name: e.target[0].value,
+            discord: e.target[1].value,
+            package: e.target[2].value,
+            details: e.target[3].value
+        });
 
-if (user) {
-document.getElementById('userEmail').textContent = user.email;
-document.getElementById('loginBtn').classList.add('d-none');
-document.getElementById('logoutBtn').classList.remove('d-none');
-localStorage.setItem('user', JSON.stringify(user));
-} else {
-document.getElementById('userEmail').textContent = '';
-document.getElementById('loginBtn').classList.remove('d-none');
-document.getElementById('logoutBtn').classList.add('d-none');
-}
-} catch (error) {
-console.error('Error checking auth status:', error);
-}
-}
-
-// نموذج التواصل
-document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
-e.preventDefault();
-const email = document.getElementById('emailInput').value;
-const message = document.getElementById('messageInput').value;
-
-try {
-await emailjs.send('service_2kfajbr', 'template_7rsj7wp', {
-to_name: "SF DESIGNS",
-from_name: email,
-message: message
-});
-
-showToast('تم إرسال رسالتك بنجاح!', 'success');
-e.target.reset();
-} catch (error) {
-console.error('Error:', error);
-showToast('حدث خطأ في إرسال الرسالة', 'error');
-}
-});
-
-// تسجيل الخروج
-document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-try {
-await supabase.auth.signOut();
-localStorage.removeItem('user');
-window.location.href = 'login.html';
-showToast('تم تسجيل الخروج بنجاح', 'success');
-} catch (error) {
-console.error('Error:', error);
-showToast('حدث خطأ أثناء تسجيل الخروج', 'error');
-}
-});
-
-// زر تسجيل الدخول
-document.getElementById('loginBtn')?.addEventListener('click', () => {
-window.location.href = 'login.html';
+        alert('تم إرسال طلبك بنجاح! سيتم التواصل معك على الديسكورد');
+        e.target.reset();
+    } catch (error) {
+        alert('حدث خطأ في إرسال الطلب. الرجاء المحاولة مرة أخرى');
+    }
 });
 
 // إخفاء شاشة التحميل
-
 window.addEventListener('load', () => {
-setTimeout(() => {
-const loadingScreen = document.getElementById('loadingScreen');
-loadingScreen.style.opacity = '0';
-setTimeout(() => {
-loadingScreen.style.display = 'none';
-document.body.style.overflow = 'auto';
-}, 500);
-}, 1500);
-});
-
-// تهيئة الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-displayDesigns();
-updateStats();
-checkAuthStatus();
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loadingScreen').style.display = 'none';
+        }, 500);
+    }, 1500);
 });
 </script>
 </body>
