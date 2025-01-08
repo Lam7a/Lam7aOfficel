@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر التصاميم | تسجيل الدخول</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+body {
+background: linear-gradient(135deg, #00b4db, #0083b0);
+height: 100vh;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container {
+max-width: 400px;
+margin: 50px auto;
+padding: 30px;
+background: rgba(255, 255, 255, 0.95);
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+text-align: center;
+margin-bottom: 30px;
+}
+
+.logo img {
+width: 120px;
+height: 120px;
+margin-bottom: 15px;
+border-radius: 60px;
+}
+
+.form-control {
+border-radius: 8px;
+padding: 12px;
+border: 1px solid #ddd;
+margin-bottom: 15px;
+}
+
+.btn-primary {
+background: #0083b0;
+border: none;
+padding: 12px;
+border-radius: 8px;
+width: 100%;
+font-weight: bold;
+}
+
+.social-login {
+text-align: center;
+margin-top: 20px;
+padding-top: 20px;
+border-top: 1px solid #ddd;
+}
+
+.social-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+margin: 0 10px;
+color: white;
+text-decoration: none;
+transition: transform 0.3s;
+}
+
+.social-btn:hover {
+transform: scale(1.1);
+}
+
+.facebook { background: #3b5998; }
+.google { background: #db4437; }
+.twitter { background: #1da1f2; }
+
+.register-link {
+text-align: center;
+margin-top: 20px;
+}
+
+.register-link a {
+color: #0083b0;
+text-decoration: none;
+font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="login-container">
+<div class="logo">
+<img src="https://via.placeholder.com/120" alt="Logo">
+<h2>متجر التصاميم</h2>
+
+<p>مرحباً بك في متجر التصاميم الإبداعية</p>
+</div>
+
+<div class="alert alert-success" style="display: none;" id="successAlert">
+تم تسجيل الدخول بنجاح!
+</div>
+
+<div class="alert alert-danger" style="display: none;" id="errorAlert">
+خطأ في تسجيل الدخول
+</div>
+
+<form id="loginForm">
+<div class="mb-3">
+<label class="form-label">البريد الإلكتروني</label>
+<input type="email" class="form-control" name="email" required>
+</div>
+<div class="mb-3">
+<label class="form-label">كلمة المرور</label>
+<input type="password" class="form-control" name="password" required>
+</div>
+<div class="mb-3 form-check">
+<input type="checkbox" class="form-check-input" id="rememberMe">
+<label class="form-check-label" for="rememberMe">تذكرني</label>
+</div>
+<button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+</form>
+
+<div class="social-login">
+<a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+<a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+<a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
+</div>
+
+<div class="register-link">
+ليس لديك حساب؟ <a href="#" id="showRegister">سجل الآن</a>
+</div>
+</div>
+</div>
+
+<!-- نموذج التسجيل -->
+<div class="modal fade" id="registerModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">تسجيل حساب جديد</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<form id="registerForm">
+<div class="mb-3">
+<label class="form-label">الاسم الكامل</label>
+<input type="text" class="form-control" name="fullName" required>
+</div>
+<div class="mb-3">
+<label class="form-label">البريد الإلكتروني</label>
+<input type="email" class="form-control" name="email" required>
+</div>
+<div class="mb-3">
+<label class="form-label">رقم الجوال</label>
+<input type="tel" class="form-control" name="phone" required>
+</div>
+<div class="mb-3">
+<label class="form-label">كلمة المرور</label>
+
+<input type="password" class="form-control" name="password" required>
+</div>
+<button type="submit" class="btn btn-primary">تسجيل</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+// تهيئة EmailJS
+emailjs.init("service_l82w2oc");
+
+// تهيئة Supabase
+const supabase = createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_KEY');
+
+// معالجة تسجيل الدخول
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+e.preventDefault();
+const email = e.target.email.value;
+const password = e.target.password.value;
+
+try {
+const { data, error } = await supabase.auth.signInWithPassword({
+email,
+password
+});
+
+if (error) throw error;
+
+// إرسال إيميل ترحيب
+await emailjs.send("service_l82w2oc", "template_43nya5a", {
+to_name: email,
+message: "مرحباً بك في متجر التصاميم"
+});
+
+document.getElementById('successAlert').style.display = 'block';
+setTimeout(() => {
+window.location.href = 'index.html';
+}, 2000);
+
+} catch (error) {
+document.getElementById('errorAlert').style.display = 'block';
+console.error('Error:', error);
+}
+});
+
+// معالجة إظهار نموذج التسجيل
+document.getElementById('showRegister').addEventListener('click', (e) => {
+e.preventDefault();
+const modal = new bootstrap.Modal(document.getElementById('registerModal'));
+modal.show();
+});
+
+// معالجة التسجيل
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+e.preventDefault();
+const formData = new FormData(e.target);
+
+try {
+const { data, error } = await supabase.auth.signUp({
+email: formData.get('email'),
+password: formData.get('password'),
+options: {
+data: {
+full_name: formData.get('fullName'),
+phone: formData.get('phone')
+}
+}
+});
+
+if (error) throw error;
+
+await emailjs.send("service_l82w2oc", "template_43nya5a", {
+to_name: formData.get('fullName'),
+message: "شكراً لتسجيلك في متجر التصاميم"
+});
+
+alert('تم التسجيل بنجاح! تفقد بريدك الإلكتروني لتفعيل حسابك.');
+bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+
+} catch (error) {
+alert('حدث خطأ أثناء التسجيل');
+console.error('Error:', error);
+}
+});
+</script>
+</body>
+</html>
